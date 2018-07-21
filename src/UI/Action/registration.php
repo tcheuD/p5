@@ -8,8 +8,15 @@ function registrationPage(array $request = []) {
         $users_group = 1;
 
             if ($_POST["password"] === $_POST["passwordConfirmation"]) {
-                $pass = password_hash($_POST["password"], PASSWORD_DEFAULT);
-                $status = addAccount($_POST["nickname"], $pass, $users_group, $_POST["email"]);
+                $data = checkSignUpDataValidity($_POST["nickname"], $_POST["email"]);
+                if (!$data){
+                    $pass = password_hash($_POST["password"], PASSWORD_DEFAULT);
+                    $status = addAccount($users_group, $_POST["nickname"], $pass, $_POST["email"]);
+                    $alreadyExist = false;
+                } else {
+                    $alreadyExist = true;
+                }
+
             }
         }
         require loadTemplate('registration.php');

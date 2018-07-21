@@ -21,5 +21,11 @@
         <input type="submit" value="Inscription" />
     </p>
 </form>
+<?php if(isset($alreadyExist)){
+    if ($alreadyExist){ ?>
+<p>nooooooooooooop</p>
+
+
+<?php }} ?>
 </body>
 </html>

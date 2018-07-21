@@ -18,6 +18,7 @@ require __DIR__.'./../src/UI/Action/editComment.php';
 require __DIR__.'./../src/UI/Action/deleteComment.php';
 require __DIR__.'./../src/UI/Action/checkUserGroup.php';
 require __DIR__.'./../src/UI/Action/verifyPostAuthor.php';
+require __DIR__.'./../src/UI/Action/checkSignUpDataValidity.php';
 
 function resolveAction(string $action, array $params = []) {
     call_user_func($action, $params);

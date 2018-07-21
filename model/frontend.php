@@ -54,6 +54,19 @@ function getComments($postId)
 
 }
 
+function checkIfUserAlreadyExist($nickname, $email)
+{
+    $query = dbConnect()->prepare(
+        'SELECT *
+                    FROM users
+                    WHERE nickname = :nickname OR email = :email');
+    $query->bindValue(':nickname', $nickname, PDO::PARAM_STR);
+    $query->bindValue(':email', $email, PDO::PARAM_STR);
+    $query->execute();
+    return $query->fetch();
+
+}
+
 function postComment($postId, $userId, $content)
 {
     $query = dbConnect()->prepare("INSERT INTO comments(user_id, post_id, comment_date, comment) VALUES(:user_id, :post_id, NOW(), :content)");
