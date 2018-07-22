@@ -23,8 +23,7 @@
 </form>
 <?php if(isset($alreadyExist)){
     if ($alreadyExist){ ?>
-<p>nooooooooooooop</p>
-
+<p><?=$alreadyExistValue?> est déjà utilisé</p>
 
 <?php }} ?>
 </body>

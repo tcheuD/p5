@@ -54,14 +54,25 @@ function getComments($postId)
 
 }
 
-function checkIfUserAlreadyExist($nickname, $email)
+function checkEmail($email)
 {
     $query = dbConnect()->prepare(
         'SELECT *
                     FROM users
-                    WHERE nickname = :nickname OR email = :email');
-    $query->bindValue(':nickname', $nickname, PDO::PARAM_STR);
+                    WHERE email = :email');
     $query->bindValue(':email', $email, PDO::PARAM_STR);
+    $query->execute();
+    return $query->fetch();
+
+}
+
+function checkNickname($nickname)
+{
+    $query = dbConnect()->prepare(
+        'SELECT *
+                    FROM users
+                    WHERE nickname = :nickname');
+    $query->bindValue(':nickname', $nickname, PDO::PARAM_STR);
     $query->execute();
     return $query->fetch();
 
