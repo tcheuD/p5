@@ -3,13 +3,13 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 function dbConnect()
 {
-    $config = require __DIR__.'./../config/pdo.php';
+    $config = require __DIR__ . './../config/pdo.php';
 
     try {
-        return new PDO('mysql:host='.$config["host"].';dbname='.$config['dbname'].';charset=utf8',
+        return new PDO('mysql:host=' . $config["host"] . ';dbname=' . $config['dbname'] . ';charset=utf8',
             $config['username'], $config['password']);
-    } catch(Exception $e) {
-        die('Erreur : '.$e->getMessage());
+    } catch (Exception $e) {
+        die('Erreur : ' . $e->getMessage());
     }
 }
 
@@ -25,13 +25,27 @@ function getPosts()
                     ');
 }
 
+function getPostsByUserId($userId)
+{
+    $query = dbConnect()->prepare(
+        'SELECT *
+                    FROM posts 
+                    WHERE user_id = :userId
+                    ');
+    $query->bindValue(':userId', $userId, PDO::PARAM_STR);
+    $query->execute();
+    $query->fetch();
+
+    return $query;
+
+}
+
 function getUsers()
 {
     return dbConnect()->query(
         'SELECT * FROM users
                 ');
 }
-
 
 
 function getComments($postId)
@@ -81,9 +95,9 @@ function checkNickname($nickname)
 function postComment($postId, $userId, $content)
 {
     $query = dbConnect()->prepare("INSERT INTO comments(user_id, post_id, comment_date, comment) VALUES(:user_id, :post_id, NOW(), :content)");
-    $query->bindParam(':user_id',$userId);
-    $query->bindParam(':post_id',$postId);
-    $query->bindParam(':content',$content);
+    $query->bindParam(':user_id', $userId);
+    $query->bindParam(':post_id', $postId);
+    $query->bindParam(':content', $content);
     return $query->execute();
 }
 
@@ -91,9 +105,9 @@ function addPost($title, $content, $user_id)
 {
     $dbConnect = dbConnect();
     $query = $dbConnect->prepare("INSERT INTO posts(user_id, title, status, creation_date, content) VALUES(:user_id,:title, 1, NOW(), :content)");
-    $query->bindParam(':user_id',$user_id);
+    $query->bindParam(':user_id', $user_id);
     $query->bindParam(':title', $title);
-    $query->bindParam(':content',$content);
+    $query->bindParam(':content', $content);
     $query->execute();
 
     $id = $dbConnect->lastInsertId();
@@ -103,10 +117,10 @@ function addPost($title, $content, $user_id)
 function addAccount($users_group, $nickname, $password, $email)
 {
     $query = dbConnect()->prepare("INSERT INTO users(users_group, registration_date, nickname, email, password) VALUES(:users_group, NOW(), :nickname, :email, :password)");
-    $query->bindParam(':users_group',$users_group);
+    $query->bindParam(':users_group', $users_group);
     $query->bindParam(':nickname', $nickname);
-    $query->bindParam(':email',$email);
-    $query->bindParam(':password',$password);
+    $query->bindParam(':email', $email);
+    $query->bindParam(':password', $password);
 
     return $query->execute();
 }
@@ -143,7 +157,7 @@ function editPost($title, $content, $id)
                                   WHERE id =:id"
     );
     $query->bindParam(':title', $title);
-    $query->bindParam(':content',$content);
+    $query->bindParam(':content', $content);
     $query->bindParam(':id', $id);
 
     return $query->execute();
@@ -155,12 +169,11 @@ function editComment($content, $id)
                                   SET comment =:content, modification_date = NOW() 
                                   WHERE id =:id"
     );
-    $query->bindParam(':content',$content);
+    $query->bindParam(':content', $content);
     $query->bindParam(':id', $id);
 
     return $query->execute();
 }
-
 
 
 function editAccount($usersGroup, $nickname, $email, $password, $id)
@@ -170,15 +183,16 @@ function editAccount($usersGroup, $nickname, $email, $password, $id)
                                   WHERE id =:id"
     );
     $query->bindParam(':users_group', $usersGroup);
-    $query->bindParam(':nickname',$nickname);
-    $query->bindParam(':email',$email);
-    $query->bindParam(':password',$password);
+    $query->bindParam(':nickname', $nickname);
+    $query->bindParam(':email', $email);
+    $query->bindParam(':password', $password);
     $query->bindParam(':id', $id);
 
     return $query->execute();
 }
 
-function getPost($postId) {
+function getPost($postId)
+{
     $query = dbConnect()->prepare(
 
         'SELECT p.user_id user_id, u.nickname user_nickname, p.title title, p.content content, 
@@ -195,7 +209,8 @@ function getPost($postId) {
     return $query->fetch();
 }
 
- function getUser($id) {
+function getUser($id)
+{
     $query = dbConnect()->prepare(
         "SELECT * FROM users WHERE id = :id");
     $query->bindValue(':id', $id, PDO::PARAM_STR);
@@ -204,7 +219,8 @@ function getPost($postId) {
     return $query->fetch();
 }
 
-function getUserByNickname($nickname) {
+function getUserByNickname($nickname)
+{
     $query = dbConnect()->prepare(
         "SELECT * FROM users WHERE nickname = :nickname");
     $query->bindValue(':nickname', $nickname, PDO::PARAM_STR);
@@ -213,7 +229,8 @@ function getUserByNickname($nickname) {
     return $query->fetch();
 }
 
-function getComment($id) {
+function getComment($id)
+{
     $query = dbConnect()->prepare(
         "SELECT * FROM comments WHERE id = :id");
     $query->bindValue(':id', $id, PDO::PARAM_STR);
@@ -222,17 +239,19 @@ function getComment($id) {
     return $query->fetch();
 }
 
-function updateUser($pseudo) {
-        $query = dbConnect()->prepare("UPDATE users 
+function updateUser($pseudo)
+{
+    $query = dbConnect()->prepare("UPDATE users 
                                   SET last_connection = NOW() 
                                   WHERE nickname = :pseudo"
-        );
-        $query->bindValue(':pseudo', $pseudo, PDO::PARAM_STR);
+    );
+    $query->bindValue(':pseudo', $pseudo, PDO::PARAM_STR);
 
-        return $query->execute();
-    }
+    return $query->execute();
+}
 
-function getTryAttempt($ip) {
+function getTryAttempt($ip)
+{
     $query = dbConnect()->prepare(
         "SELECT * FROM loginAttempt WHERE ip = :ip");
     $query->bindValue(':ip', $ip, PDO::PARAM_STR);
