@@ -21,14 +21,14 @@ return [
     ],
 
     'EditAccount' => [
-        'path' => '/p5/admin/edit-account/{id}',
+        'path' => '/p5/edit-account/{id}',
         'method' => ['GET', 'POST'],
         'action' => 'EditAccountPage',
         'params' =>['id' => '(\d+)', 'nickname' => 'char', 'users_group' => 'var', 'email' => 'varchar', 'password' => 'char']
     ],
 
     'deleteAccount' => [
-        'path' => '/p5/admin/delete-account/{id}',
+        'path' => '/p5/delete-account/{id}',
         'method' => ['GET', 'POST'],
         'action' => 'deleteAccountPage',
         'params' =>['id' => '(\d+)']
@@ -57,6 +57,12 @@ return [
         'path' => '/p5/listPosts/',
         'method' => ['GET', 'POST'],
         'action' => 'listPosts'
+    ],
+
+    'myAccount' => [
+        'path' => '/p5/myAccount',
+        'method' => ['GET', 'POST'],
+        'action' => 'myAccountPage'
     ],
 
     'addNewPost' => [
