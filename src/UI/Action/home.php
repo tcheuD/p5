@@ -1,7 +1,7 @@
 <?php
-require __DIR__.'./../../../config/templateLoader.php';
+require __DIR__.'./../../../config/viewLoader.php';
 
 function home(){
-    $title = 'hello world !';
-    require loadTemplate('index.php');
+    $post = listPosts();
+    require loadView('index.php');
 }

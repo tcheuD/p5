@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__.'./../../../config/templateLoader.php';
+require_once __DIR__.'./../../../config/viewLoader.php';
 require_once __DIR__.'./../../../model/frontend.php';
 
 function editPostPage(array $params, array $request = [])
@@ -20,11 +20,10 @@ function editPostPage(array $params, array $request = [])
 
 
     if (isset($_POST["title"], $_POST["content"])) {
-
             $status = editPost($_POST['title'], $_POST['content'], $id);
-    } else echo "empty";
+    }
 
     } else $showForm = FALSE;
 
-    require loadTemplate('editPost.php');
+    require loadView('editPost.php');
 }

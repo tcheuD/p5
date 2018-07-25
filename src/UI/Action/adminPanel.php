@@ -1,8 +1,10 @@
 <?php
+require_once __DIR__.'./../../../model/frontend.php';
 function adminPanel() {
 
     if(isset($_SESSION['users_group'])) {
-        $usersGroup = $_SESSION['users_group'];
+        $usersGroup = intval($_SESSION['users_group']);
+        var_dump($usersGroup);
         if ($usersGroup == 2) {
 
             //TODO Overview : number of users, posts, number of ban

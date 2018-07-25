@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . './../../../config/templateLoader.php';
+require_once __DIR__ . './../../../config/viewLoader.php';
 require_once __DIR__ . './../../../model/frontend.php';
 
 function registrationPage(array $request = [])
@@ -32,7 +32,7 @@ function registrationPage(array $request = [])
         }
 
     }
-    require loadTemplate('registration.php');
+    require loadView('registration.php');
 }
 
 
