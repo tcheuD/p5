@@ -4,7 +4,7 @@ return [
     'homepage' => [
         'path' => '/p5/',
         'method' => ['GET'],
-        'action' => 'home'
+        'action' => 'App\UI\Action\HomeAction'
     ],
 
     'adminPanel' => [
@@ -16,21 +16,21 @@ return [
     'addAccount' => [
         'path' => '/p5/admin/add-account',
         'method' => ['GET', 'POST'],
-        'action' => 'addAccountPage',
+        'action' => 'App\UI\Action\AddAccountAction',
         'params' =>['nickname' => 'char', 'users_group' => 'int', 'email' => 'varchar', 'password' => 'char']
     ],
 
     'EditAccount' => [
         'path' => '/p5/edit-account/{id}',
         'method' => ['GET', 'POST'],
-        'action' => 'EditAccountPage',
+        'action' => 'App\UI\Action\EditAccountAction',
         'params' =>['id' => '(\d+)', 'nickname' => 'char', 'users_group' => 'var', 'email' => 'varchar', 'password' => 'char']
     ],
 
     'deleteAccount' => [
         'path' => '/p5/delete-account/{id}',
         'method' => ['GET', 'POST'],
-        'action' => 'deleteAccountPage',
+        'action' => 'App\UI\Action\DeleteAccountAction',
         'params' =>['id' => '(\d+)']
     ],
 
@@ -43,7 +43,7 @@ return [
     'logoutPage' => [
         'path' => '/p5/logout',
         'method' => ['GET'],
-        'action' => 'logout'
+        'action' => 'App\UI\Action\LogoutAction'
     ],
 
     'postDetails' => [
@@ -112,13 +112,7 @@ return [
     'login' => [
         'path' => '/p5/login',
         'method' => ['GET', 'POST'],
-        'action' => 'login',
+        'action' => 'App\UI\Action\LoginAction',
         'params' =>['pseudo' => 'char', 'password' => 'char']
     ]
 ];
-   // 'article_details' => [
-     //   'path' => '/article/details/{id}',
-       // 'method' => ['GET', 'POST'],
-       // '//action' => 'getArticleDetails(int $id)',
-       // 'params' => ['id' => 'string']
-   // ]

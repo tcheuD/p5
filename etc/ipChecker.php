@@ -1,15 +1,18 @@
 <?php
 
-class Services {
+namespace Core;
+
+class IpChecker
+{
 
     public static function bruteCheck($failed_attempt = false) {
         $deny_login = false;
 
         if(!file_exists(MM_BRUTE_FILE)) touch(MM_BRUTE_FILE);
-        $cache = unserialize(Services::fileToString(MM_BRUTE_FILE));
+        $cache = unserialize(self::fileToString(MM_BRUTE_FILE));
         if(!$cache) $cache = array();
 
-        if($failed_attempt) {  //register the new failed attempt and timestamp
+        if($failed_attempt) {
             if(!isset($cache[$_SERVER['REMOTE_ADDR']])) {
                 $cache[$_SERVER['REMOTE_ADDR']] = array();
             }
@@ -37,7 +40,7 @@ class Services {
             }
         }
 
-        Services::stringToFile(MM_BRUTE_FILE, serialize($cache));
+        self::stringToFile(MM_BRUTE_FILE, serialize($cache));
 
         return $deny_login;
     }

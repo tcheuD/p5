@@ -1,5 +1,5 @@
 <?php
 
 function getRepository(string $name) {
-    require __DIR__.'./../src/Domain/Models/'.$name.'.php';
+    require __DIR__ . './../src/Domain/Repository/' .$name.'.php';
 }
