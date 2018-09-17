@@ -7,11 +7,16 @@ class Route
     private $path;
     private $action;
     private $param;
+    private $uri;
+    private $methods = [];
 
-    public function __construct($path, $action)
+    public function __construct($path, $action, $param, $uri, $methods = [])
     {
         $this->setPath($path);
         $this->setAction($action);
+        $this->setUri($uri);
+        $this->setParam($param, $uri);
+        $this->methods = $methods;
     }
 
     /**
@@ -39,6 +44,14 @@ class Route
     }
 
     /**
+     * @return array
+     */
+    public function getMethods(): array
+    {
+        return $this->methods;
+    }
+
+    /**
      * @param mixed $path
      */
     public function setPath($path)
@@ -54,42 +67,27 @@ class Route
         $this->action = $action;
     }
 
-    public function setParam($param)
+    public function setUri($uri)
     {
-        $this->param = $param;
-        $path = $this->getPath();
+        $this->uri = $uri;
+    }
 
+    public function setParam($param, $uri)
+    {
+        $this->param = $param ?? [];
         if ($this->param) {
             $result = [];
-
             foreach ($param as $key => $regex) {
-                if (!is_null($regex)) {
-                    preg_match('#' . $regex . '$#', $path, $result);
-                    if ($result) {
-                        $path = strtr($this->path, ['{' . $key . '}' => $result[0]]);
+                    preg_match('#'.$regex.'$#', $uri, $result);
+                if ($result) {
+                    $path = strtr($this->path, ['{'.$key.'}' => $result[0]]);
 
                         $this->path = $path;
-                        print_r($path);
-                        $this->param = $result;
-                        var_dump($result);
+                        $this->param = (int) $result[0];
                     } else {
                         return null;
                     }
                 }
-
             }
         }
-    }
-
-    public function match($uri)
-    {
-            $path = $this->getPath();
-                preg_match('#' . $path . '$#', $uri, $result);
-                if ($result) {
-                    array_shift($result);
-                    $this->setParam($result);
-                } else {
-                    return null;
-                }
-            }
 }
