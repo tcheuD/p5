@@ -1,23 +1,27 @@
 <?php
-require_once __DIR__ . './../../config/templateLoader.php';
+require_once __DIR__ .'./../../etc/templateLoader.php';
 
-$title = htmlspecialchars($donnee['title']); ?>
+$title = $post->getTitle(); ?>
 
 <?php ob_start();
 
-if ($showEditDelete) { ?>
+if (isset($_SESSION['id'])) {
+    $authorId = intval($post->getUser()->getId());
+if ($_SESSION['id'] == $authorId) {
+?>
 
 <section>
     <a href=../editPost/<?= $id ?>>Modifier</a>
     <a href=../deletePost/<?= $id ?>>Supprimer</a>
     <?php
     }
+    }
     ?>
 
-    <h1><?= $postTitle ?></h1>
-    <p>auteur : <?= $userNickname ?></p>
+    <h1><?= $post->getTitle(); ?></h1>
+    <p>auteur : <?= $post->getUser()->getNickname(); ?></p>
 
-    <article><?= $postContent ?></article>
+    <article><?= $post->getContent(); ?></article>
 
     <form action="/p5/post/<?= $id ?>" method="post">
         <p>
@@ -29,12 +33,19 @@ if ($showEditDelete) { ?>
     </form>
 
     <?php
-    while ($i = $coms->fetch()) {
-        if ($i["u_user_id"] == intval($_SESSION["id"]) || checkUserGroup()) {
-            echo '<a href=../editComment/' . $i["c_comment_id"] . '>Edit</a> <a href=../deleteComment/' . $i["c_comment_id"] . '>Delete</a> ';
-        }
-        echo 'user : ' . $i["user_nickname"] . ' message : ' . $i["comment"] . '<br />';
+    foreach ($coms as $com) {
 
+        if (isset($_SESSION['id']))
+        {
+            if($_SESSION['id'] == $com->getUser()->getId()){
+                echo '<a href=../editComment/' . $com->getId()
+                    . '>Edit</a> <a href=../deleteComment/' . $com->getId()
+                    . '>Delete</a> ';
+            }
+        }
+
+        echo '<p>' . $com->getUser()->getNickname();
+        echo '  commentaire :' . $com->getComment() . '</p>';
     }
     ?>
 

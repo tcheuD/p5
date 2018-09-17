@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . './../../config/templateLoader.php';
+require_once __DIR__ . './../../etc/templateLoader.php';
 
 $title = "Ajouter un compte" ?>
 
@@ -8,7 +8,7 @@ $title = "Ajouter un compte" ?>
 <section>
     <?php if ($showForm) {
         ?>
-        <form action="/p5/add-account" method="post">
+        <form action="/p5/admin/add-account" method="post">
             <p>
                 <label>Pseudo</label><br>
                 <input type="text" name="nickname" value="" /><br />

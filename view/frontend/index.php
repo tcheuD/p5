@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . './../../config/templateLoader.php';
+require_once __DIR__.'./../../etc/templateLoader.php';
 
 $title = "Acceuil" ?>
 
@@ -7,8 +7,19 @@ $title = "Acceuil" ?>
 
 <section>
     <?php
-    while ($donnees = $post->fetch()){
-    echo '<a href=/p5/post/'.$donnees['id'].'> auteur : '.$donnees['user_nickname'].", ".'identifiant :'.$donnees['id'].", ".'Titre : '.$donnees['title'].", ".'derniere modification : '.$donnees['modification_date']. "</a><br>";
+    foreach ($posts as $post) {
+
+        echo $post->getTitle();
+
+        if($post->getUser()->getNickname() == null)
+        {
+            $userNickname = "compte supprimé";
+        } else $userNickname = $post->getUser()->getNickname();
+        echo '<p>' .$post->getId();
+        echo '<a href="/p5/post/'.$post->getId().'">'.$post->getTitle().'</a>';
+        echo ' par :'.$userNickname.'    '.$post->getUser()->getId().'</p>';
+
+
     }
     ?>
 </section>

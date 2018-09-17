@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . './../../config/templateLoader.php';
+require_once __DIR__ . './../../etc/templateLoader.php';
 
 $title = "Ajouter un post" ?>
 
@@ -16,7 +16,7 @@ $title = "Ajouter un post" ?>
                 <label>Contenu</label><br>
                 <textarea name="content" rows="7" cols="50"></textarea><br />
 
-                <input type="submit" value="ajouter" />
+                <button type="submit">Ajouter</button>
             </p>
         </form>
         <?php

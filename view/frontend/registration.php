@@ -1,6 +1,5 @@
 <?php
-require_once __DIR__ . './../../config/templateLoader.php';
-
+require_once __DIR__ .'./../../etc/templateLoader.php';
 $title = "Inscription" ?>
 
 <?php ob_start();?>
