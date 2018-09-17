@@ -4,9 +4,9 @@ namespace Core;
 
 class ActionResolver
 {
-    public function resolveAction(string $action, array $params = [])
+    public function resolveAction($action, $params = [])
     {
-        $class = new $action();
+        $class = new $action;
         return $class($params);
     }
 }
