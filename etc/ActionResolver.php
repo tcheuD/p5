@@ -1,12 +1,18 @@
 <?php
 
 namespace Core;
+use Core\Interfaces\RequestInterface;
 
 class ActionResolver
 {
-    public function resolveAction($action, $params = [])
+    public function resolveAction($params, $action, RequestInterface $request)
     {
         $class = new $action;
-        return $class($params);
+
+        if ($params !== null) {
+            return $class($request, $params);
+        } else {
+            return $class($request);
+        }
     }
 }
