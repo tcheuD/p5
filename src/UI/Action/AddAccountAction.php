@@ -5,27 +5,23 @@ namespace App\UI\Action;
 use App\UI\Action\Interfaces\AddAccountActionInterface;
 use App\Domain\Repository\AccountRepository;
 use App\Domain\Factory\UserFactory;
-
-require_once __DIR__.'./../../../etc/viewLoader.php';
-require_once __DIR__.'/Interfaces/AddAccountActionInterface.php';
-
+use Core\Twig;
+use Core\Response;
 
 class AddAccountAction implements AddAccountActionInterface
 {
-    public $accountRepository;
+    private $accountRepository;
+    private $twig;
 
     public function __construct()
     {
         $this->accountRepository = new AccountRepository();
+        $this->twig = new Twig();
     }
 
-    public function __invoke(array $request = [])
+    public function __invoke($request)
     {
-        $isAdmin = CheckUserGroupAction::checkUserGroup();
-
-
-        var_dump($isAdmin);
-        if ($isAdmin) {
+        if ($request->getSession()->isAdmin()) {
             $showForm = true;
             if (isset($_POST["nickname"], $_POST["users_group"], $_POST["password"], $_POST["passwordConfirmation"], $_POST["email"])) {
                 if ($_POST["password"] === $_POST["passwordConfirmation"]) {
@@ -36,7 +32,7 @@ class AddAccountAction implements AddAccountActionInterface
                 }
             }
         } else $showForm = false;
-        require_once loadView('AddAccount.php');
+        return new Response($this->twig->getTwig($request)->render('addAccount.html.twig', ['showForm' => $showForm]));
     }
 }
 
