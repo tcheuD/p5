@@ -4,41 +4,38 @@ namespace App\UI\Action;
 
 use App\Domain\Repository\CommentRepository;
 use App\UI\Action\Interfaces\DeleteCommentActionInterface;
-
-require_once __DIR__ . './../../../etc/viewLoader.php';
+use Core\Interfaces\RequestInterface;
+use Core\Response;
+use Core\Twig;
 
 class DeleteCommentAction implements DeleteCommentActionInterface
 {
     private $commentRepository;
+    private $session;
+    private $twig;
+    private $userId;
 
     public function __construct()
     {
         $this->commentRepository = new CommentRepository();
+        $this->twig = new Twig();
     }
 
-    public function __invoke($params, array $request = [])
+    public function __invoke(RequestInterface $request, $id)
     {
-        $id = $params;
-        if (isset($_SESSION["id"])) {
 
-            $comment = $this->commentRepository->getComment($id);
+        $this->session = $request->getSession();
+        $comment = $this->commentRepository->getComment($id);
+        $this->userId = $comment->getUser();
 
-            if (isset($_SESSION['id'])) {
-
-                if (intval($_SESSION['id']) == $comment->getUser()) {
-
-                    $status = $this->commentRepository->deleteComment($id);
-                    $postId = $comment->getPostId();
-                    header("Location: /p5/post/$postId");
-                }
-            } else {
-                echo "vous n\'avez pas les droits nécessaires pour supprimer ce post";
+        if ($this->session->get('id')) {
+            if ($this->userId = $this->session->get('id') || $this->session->isAdmin()) {
+                $status = $this->commentRepository->deleteComment($id);
+                $postId = $comment->getPostId();
+                header("Location: /p5/post/$postId");
             }
         }
 
-        require loadView('DeleteCommentAction.php');
+        return new Response($this->twig->getTwig($request)->render('deleteComment.html.twig', array('showForm' => $showForm)));
     }
 }
-
-?>
-
