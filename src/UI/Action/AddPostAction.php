@@ -1,26 +1,33 @@
 <?php
 
 namespace App\UI\Action;
+
 use App\UI\Action\Interfaces\AddPostActionInterface;
 use App\Domain\Repository\PostRepository;
-use App\Domain\Model\Post;
 use App\Domain\Factory\PostFactory;
-require_once __DIR__.'./../../../etc/viewLoader.php';
+use Core\Interfaces\RequestInterface;
+use Core\Response;
+use Core\Twig;
+
 
 class AddPostAction implements AddPostActionInterface
 {
     private $postRepository;
+    private $session;
+    private $twig;
 
     public function __construct()
     {
         $this->postRepository = new PostRepository();
+        $this->twig = new Twig();
     }
 
-    public function __invoke(array $request = [])
+    public function __invoke(RequestInterface $request)
     {
-        //TODO link to a function to prevent flood for addPost & addComment
-        if (isset($_SESSION['id'])) {
-            $showForm = true;
+
+        $this->session = $request->getSession();
+
+        if ($this->session->parameterExist('id')) {
 
             if (isset($_POST["title"]) && isset($_POST["content"])) {
 
@@ -29,7 +36,7 @@ class AddPostAction implements AddPostActionInterface
                 header("Location: post/$status");
                 exit;
             }
-        } else $showForm = false;
-        require loadView('AddPost.php');
-    }
+        }
+            return new Response($this->twig->getTwig($request)->render('addPost.html.twig'));
+        }
 }
