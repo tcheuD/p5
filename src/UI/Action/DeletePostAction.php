@@ -2,37 +2,45 @@
 
 namespace App\UI\Action;
 
+use App\Domain\Repository\CommentRepository;
 use App\Domain\Repository\PostRepository;
 use App\UI\Action\Interfaces\DeletePostActionInterface;
-
-require_once __DIR__ . './../../../etc/viewLoader.php';
+use Core\Response;
+use Core\Twig;
 
 class DeletePostAction implements DeletePostActionInterface
 {
     private $postRepository;
+    private $commentRepository;
+    private $session;
+    private $twig;
 
     public function __construct()
     {
         $this->postRepository = new PostRepository();
+        $this->commentRepository = new CommentRepository();
+        $this->twig = new Twig();
     }
 
 
-    public function __invoke($params, array $request = []) {
+    public function __invoke($request, $id) {
 
 
-        $id = $params;
-
+        $this->session = $request->getSession();
         $post = $this->postRepository->getPost($id);
+        $showForm = false;
 
-            if (isset($_SESSION['id'])) {
+        if ($this->session->get('id')) {
 
-                if (intval($_SESSION['id']) == $post->getUser()->getId()) {
+            if ($post->getUser()->getId() == intval($this->session->get('id')) || $this->session->isAdmin()) {
+                    $showForm = true;
                     $status = $this->postRepository->deletePost($id);
+                    $this->commentRepository->deleteAllFromPost($id);
                     header("Location: /p5/");
                 }
             }
 
-        require loadView('DeletePostAction.php');
+        return new Response($this->twig->getTwig($request)->render('deletePost.html.twig', ['showForm' => $showForm]));
     }
 }
 
