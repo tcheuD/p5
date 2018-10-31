@@ -5,8 +5,11 @@ namespace App\UI\Action;
 use App\UI\Action\Interfaces\EditCommentActionInterface;
 use App\Domain\Repository\CommentRepository;
 use App\Domain\Repository\AccountRepository;
-use App\Domain\Model\Comment;
 use App\Domain\Factory\CommentFactory;
+use Core\SessionHandler;
+use Core\Response;
+use Core\Twig;
+use Core\ViewLoader;
 
 require_once __DIR__.'./../../../etc/viewLoader.php';
 require_once __DIR__.'/Interfaces/EditCommentActionInterface.php';
@@ -16,34 +19,45 @@ class EditCommentAction implements EditCommentActionInterface
 
     private $accountRepository;
     private $commentRepository;
+    private $session;
+    private $twig;
 
     public function __construct()
     {
         $this->accountRepository = new AccountRepository();
         $this->commentRepository = new CommentRepository();
+        $this->twig = new Twig();
     }
 
-    public function __invoke($params, array $request = [])
+    public function __invoke($request, $id)
     {
-        $id = intval($params);
+        $this->session = $request->getSession();
         $comment = $this->commentRepository->getComment($id);
         $postId = $comment->getPostId();
-        if (isset($_SESSION['id'])) {
-            if ($_SESSION['id'] == $comment->getUser()) {
+
+        if ($this->session->get('id')) {
+
+            if ($id == intval($this->session->get('id')) || $this->session->isAdmin()) {
+
                     $showForm = true;
+
                     if (null !== $comment->getComment()) {
+
                         $content = htmlspecialchars($comment->getComment());
                     } else $content = "";
 
                     if (isset($_POST["comment"])) {
+
                         $prepare = CommentFactory::edit($comment, $_POST);
                         $status = $this->commentRepository->editComment($prepare);
                         header("Location: /p5/post/$postId");
+                        exit;
                     }
 
 
                 } else $showForm = false;
-                require loadView('editComment.php');
             }
+        return new Response($this->twig->getTwig($request)->render('editComment.html.twig',
+            array('showForm' => $showForm, 'comment' => $comment)));
         }
 }
