@@ -5,72 +5,61 @@ namespace App\UI\Action;
 use App\UI\Action\Interfaces\EditAccountActionInterface;
 use App\Domain\Factory\UserFactory;
 use App\Domain\Repository\AccountRepository;
-
-require_once __DIR__ . './../../../etc/viewLoader.php';
-require_once __DIR__.'/Interfaces/EditAccountActionInterface.php';
-
+use Core\Response;
+use Core\Twig;
 
 class EditAccountAction implements EditAccountActionInterface
 {
     private $accountRepository;
+    private $session;
+    private $twig;
+    private $passwordDontMatch = false;
 
     public function __construct()
     {
         $this->accountRepository = new AccountRepository();
+        $this->twig = new Twig();
     }
 
 
-    public function __invoke($id, array $request = [])
+    public function __invoke($request, $id)
     {
+
+        $this->session = $request->getSession();
         $account = $this->accountRepository->getUser($id);
-        if (isset($_SESSION['id'])) {
-            $admin = false;
-            if ($id == intval($_SESSION['id'])) {
-                $showForm = true;
+
+        if ($account->getUsersGroup() !== null) {
+            if ($account->getUsersGroup() == 2) {
+                $usersGroupAdmin = "checked=\"checked\"";
+                $usersGroupMember = "";
+            } else {
+                $usersGroupAdmin = "";
+                $usersGroupMember = "checked=\"checked\"";
             }
-            if (CheckUserGroupAction::checkUserGroup()) {
-                $admin = true;
-                $showForm = true;
+        }
+
+        if (isset($_POST["nickname"], $_POST["email"])) {
+
+            if (isset($_POST["password"]) || isset($_POST["passwordConfirmation"])) {
+
+                if ($_POST["password"] === $_POST["passwordConfirmation"]) {
+                    $pass = password_hash($_POST["password"], PASSWORD_DEFAULT);
+                } else $this->passwordDontMatch = true;
+
+            } else $pass = $account->getPassword();
+
+            if (isset($pass)) {
+
+                $user = UserFactory::buildEdit($account, $_POST, $pass);
+                $status = $this->accountRepository->editAccount($user);
             }
-
-
-                if ($account->getUsersGroup() !== null) {
-                    if ($account->getUsersGroup() == 2) {
-                        $usersGroupAdmin = "checked=\"checked\"";
-                        $usersGroupMember = "";
-                    } else {
-                        $usersGroupAdmin = "";
-                        $usersGroupMember = "checked=\"checked\"";
-                    }
-                } else $usersGroup = "";
-
-
-                if ($account->getNickname() !== null) {
-                    $userNickname = htmlspecialchars($account->getNickname());
-                } else $userNickname = "lol";
-
-                if ($account->getEmail()!== null) {
-                    $userEmail = htmlspecialchars($account->getEmail());
-                } else $userEmail = "";
-
-                if (isset($_POST["nickname"], $_POST["email"])) {
-                    if (isset($_POST["password"]) || isset($_POST["passwordConfirmation"])) {
-                        if ($_POST["password"] === $_POST["passwordConfirmation"]) {
-                            $pass = password_hash($_POST["password"], PASSWORD_DEFAULT);
-                        } else $passwordDontMatch = true;
-                    } else $pass = $account->getPassword();
-
-                    if (isset($pass)) {
-                        if ($admin) {
-                            $postUserGroups = $_POST["users_group"];
-                        } else $postUserGroups = 1; //if the logged user isn't an admin, he can't change his own userGroups
-
-                        $user = UserFactory::buildEdit($account, $_POST, $postUserGroups, $pass);
-                        $status = $this->accountRepository->editAccount($user);
-                    }
-                }
-            } else $showForm = false;
-
-        require loadView('editAccount.php');
+        }
+        return new Response($this->twig->getTwig($request)->render('editAccount.html.twig', array(
+            'id' => $id,
+            'usersGroupMember' => $usersGroupMember,
+            'usersGroupAdmin' => $usersGroupAdmin,
+            'passwordDontMatch' => $this->passwordDontMatch,
+            'account' => $account
+        )));
     }
 }
