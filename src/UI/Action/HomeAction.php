@@ -1,26 +1,26 @@
 <?php
 
 namespace App\UI\Action;
-use App\Domain\Repository\PostRepository;
-use App\Domain\Model\Post;
-use App\Domain\Model\User;
-require_once __DIR__.'./../../../etc/viewLoader.php';
 
+use App\Domain\Repository\PostRepository;
+use Core\Interfaces\RequestInterface;
+use Core\Response;
+use Core\Twig;
 
 class HomeAction
 {
 
     private $postRepository;
+    private $twig;
 
     public function __construct()
     {
         $this->postRepository = new PostRepository();
+        $this->twig = new Twig();
     }
 
-    public function __invoke()
+    public function __invoke(RequestInterface $request)
     {
-        $posts = $this->postRepository->getPosts();
-        require loadView('index.php');
-
+        return new Response($this->twig->getTwig($request)->render('index.html.twig'));
     }
 }
