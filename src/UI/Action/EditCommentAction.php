@@ -6,13 +6,9 @@ use App\UI\Action\Interfaces\EditCommentActionInterface;
 use App\Domain\Repository\CommentRepository;
 use App\Domain\Repository\AccountRepository;
 use App\Domain\Factory\CommentFactory;
-use Core\SessionHandler;
 use Core\Response;
 use Core\Twig;
-use Core\ViewLoader;
 
-require_once __DIR__.'./../../../etc/viewLoader.php';
-require_once __DIR__.'/Interfaces/EditCommentActionInterface.php';
 
 class EditCommentAction implements EditCommentActionInterface
 {
@@ -40,11 +36,6 @@ class EditCommentAction implements EditCommentActionInterface
             if ($id == intval($this->session->get('id')) || $this->session->isAdmin()) {
 
                     $showForm = true;
-
-                    if (null !== $comment->getComment()) {
-
-                        $content = htmlspecialchars($comment->getComment());
-                    } else $content = "";
 
                     if (isset($_POST["comment"])) {
 
