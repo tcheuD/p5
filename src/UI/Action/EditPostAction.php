@@ -6,48 +6,46 @@ use App\UI\Action\Interfaces\EditPostActionInterface;
 use App\Domain\Repository\PostRepository;
 use App\Domain\Repository\AccountRepository;
 use App\Domain\Factory\PostFactory;
-
-require_once __DIR__ . './../../../etc/viewLoader.php';
-require_once __DIR__.'/Interfaces/EditPostActionInterface.php';
+use Core\Response;
+use Core\Twig;
 
 class EditPostAction implements EditPostActionInterface
 {
     private $postRepository;
     private $accountRepository;
+    private $session;
+    private $twig;
 
     public function __construct()
     {
         $this->postRepository = new PostRepository();
         $this->accountRepository = new AccountRepository();
+        $this->twig = new Twig();
     }
 
-    public function __invoke($id, array $request = [])
+    public function __invoke($request, $id)
     {
         $post = $this->postRepository->getPost($id);
-        //var_dump($post->getUser()->getId());
+        $this->session = $request->getSession();
 
-        if (isset($_SESSION['id'])) {
-            //$authorId = intval($post->getUser()->getId());
-            if ($_SESSION['id'] == $post->getUser()->getId()) {
-                $showForm = TRUE;
-                if ($post->getTitle() !== null) {
-                    $postTitle = htmlspecialchars($post->getTitle());
-                } else $postTitle = "";
+        if ($this->session->get('id')) {
 
-                if ($post->getContent() !== null) {
-                    $postContent = htmlspecialchars($post->getContent());
-                } else $postContent = "";
+            if ($id == intval($this->session->get('id')) || $this->session->isAdmin()) {
 
+                $showForm = true;
 
                 if (isset($_POST["title"], $_POST["content"])) {
+
                     $prepare = PostFactory::edit($post, $_POST);
                     $status = $this->postRepository->editPost($prepare, $id);
                     header("Location: /p5/post/$id");
-
+                    exit;
                 }
             } else $showForm = false;
-            require loadView('editPost.php');
         }
+        return new Response($this->twig->getTwig($request)->render('editPost.html.twig',
+            array('showForm' => $showForm, 'post' => $post)));
+
     }
 
     }
