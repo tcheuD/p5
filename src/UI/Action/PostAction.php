@@ -1,36 +1,42 @@
 <?php
 
 namespace App\UI\Action;
-use App\Domain\Model\Comment;
+
 use App\Domain\Repository\PostRepository;
 use App\Domain\Repository\CommentRepository;
 use App\UI\Action\Interfaces\PostActionInterface;
 use App\Domain\Repository\AccountRepository;
 use App\Domain\Factory\CommentFactory;
-
-require_once __DIR__ .'./../../../etc/viewLoader.php';
+use Core\Interfaces\RequestInterface;
+use Core\Response;
+use Core\Twig;
 
 class PostAction implements PostActionInterface
 {
     private $postRepository;
     private $accountRepository;
     private $commentRepository;
+    private $twig;
+
     public function __construct()
     {
         $this->postRepository = new PostRepository();
         $this->accountRepository = new AccountRepository();
         $this->commentRepository = new CommentRepository();
+        $this->twig = new Twig();
     }
 
-    public function __invoke($id, array $request = [])
+    public function __invoke(RequestInterface $request, $id)
     {
-        $id;
+
+        $session = $request->getSession();
+
         $post = $this->postRepository->getPost($id);
 
         $coms = $this->commentRepository->getComments($id);
 
-        if (isset($_SESSION['id'])) {
-            $showForm = true;
+        if ($session->get('id')) {
+            $showFormComment = true;
 
             if (isset($_POST["comment"])) {
                 $comment = CommentFactory::add($_POST, $id);
@@ -38,8 +44,8 @@ class PostAction implements PostActionInterface
                 header("refresh:0");
                 exit;
             }
-
-        }
-        require loadView('post.php');
+        } else $showFormComment = false;
+        return new Response($this->twig->getTwig($request)->render('post.html.twig',
+            array('post' => $post, 'id' => $id, 'coms' => $coms)));
     }
 }
