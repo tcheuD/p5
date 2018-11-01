@@ -1,23 +1,28 @@
 <?php
 
 namespace App\UI\Action;
+use App\Domain\Factory\UserFactory;
 use App\Domain\Repository\AccountRepository;
 use App\UI\Action\Interfaces\RegistrationActionInterface;
 use App\Domain\Model\User;
-require_once __DIR__ . './../../../etc/viewLoader.php';
-require_once __DIR__.'/Interfaces/RegistrationActionInterface.php';
+use Core\Response;
+use Core\Twig;
 
 class RegistrationAction implements RegistrationActionInterface
 {
     private $accountRepository;
+    private $userFactory;
+    private $twig;
 
     public function __construct()
     {
         $this->accountRepository = new AccountRepository();
+        $this->userFactory = new UserFactory();
+        $this->twig = new Twig();
     }
 
 
-    public function __invoke(array $request = [])
+    public function __invoke($request)
     {
         if (isset($_POST["nickname"], $_POST["password"], $_POST["passwordConfirmation"], $_POST["email"])) {
             $users_group = 1;
@@ -39,13 +44,15 @@ class RegistrationAction implements RegistrationActionInterface
                 } else {
                     $pass = password_hash($_POST["password"], PASSWORD_DEFAULT);
                     $user = $this->setUser($_POST, $pass);
+                    $user = $this->userFactory::buildRegistration($_POST, $pass);
                     $status = $this->accountRepository->addAccount($user);
                     $alreadyExist = false;
                 }
             }
 
         }
-        require loadView('registration.php');
+        return new Response($this->twig->getTwig($request)->render('listPosts.html.twig',
+            array('alreadyExist' => $alreadyExist, 'alreadyExistValue' => $alreadyExistValue)));
     }
 
     public function setUser($data, $pass)
