@@ -8,7 +8,7 @@ $title = "Modifier le profil" ?>
 <section>
     <?php if ($showForm) {
         ?>
-        <form action="/p5/admin/edit-account/<?= $id ?>" method="post">
+        <form action="/p5/edit-account/<?= $id ?>" method="post">
             <p>
                 <label>Pseudo</label><br>
                 <input type="text" name="nickname" value="<?= $userNickname ?>"/><br/>
