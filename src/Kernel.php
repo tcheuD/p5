@@ -3,6 +3,7 @@
 namespace App;
 
 use Core\Interfaces\RequestInterface;
+use Core\Interfaces\ResponseInterface;
 use Core\Router;
 
 class Kernel
@@ -14,8 +15,9 @@ class Kernel
         $this->router = new Router();
     }
 
-    public function handle(RequestInterface $request)
+    public function handle(RequestInterface $request): ResponseInterface
     {
-        $this->router->handleRequest($request);
+        return $this->router->handleRequest($request);
     }
+
 }
