@@ -2,6 +2,7 @@
 
 namespace Core;
 
+use App\UI\Action\NotFoundAction;
 use Core\Interfaces\RequestInterface;
 
 class Router
@@ -37,12 +38,14 @@ class Router
 
         foreach ($this->routes as $route) {
             switch ($request->getRequestUri()) {
-                //case $route->getPath() && \in_array($request->getMethod(), $route->getMethods()):
-                case $route->getPath():
-                    return $this->actionResolver->resolveAction($route->getAction(), $route->getParam());
+                case $route->getPath() === $request->getRequestUri() && \in_array($request->getMethod(), $route->getMethods()):
+                    return $this->actionResolver->resolveAction($route->getParam(), $route->getAction(), $request);
                     break;
             }
         }
-    }
 
+        return $this->actionResolver->resolveAction([], NotFoundAction::class, $request);
+
+
+    }
 }
