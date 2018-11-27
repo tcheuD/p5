@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: agathe
- * Date: 13/09/2018
- * Time: 10:22
- */
 
 namespace Core;
 
@@ -26,18 +20,17 @@ final class Request implements RequestInterface
     public $session;
     public $server;
 
-    public function __construct($query, $request, $files, $session, $server)
+    public function __construct($query, $request, $files, $server)
     {
         $this->query = new ParameterBag($query);
         $this->request = new ParameterBag($request);
         $this->files = new ParameterBag($files);
-        $this->session = new ParameterBag($session);
         $this->server = new ParameterBag($server);
     }
 
     public static function createFromGlobals()
     {
-        return new self($_GET, $_POST, $_FILES, $_SESSION, $_SERVER);
+        return new self($_GET, $_POST, $_FILES, $_SERVER);
     }
 
     public function getRequestUri()
@@ -48,5 +41,14 @@ final class Request implements RequestInterface
     public function getMethod()
     {
         return $this->server->get("REQUEST_METHOD");
+    }
+
+    public function getSession()
+    {
+        if (\count($this->session) == 0) {
+            $this->session = new SessionHandler();
+        }
+
+        return $this->session;
     }
 }
