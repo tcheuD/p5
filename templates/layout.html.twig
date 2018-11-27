@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}P5{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="/p5/public/css/main.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
+
+</head>
+<body class="homepage is-preload">
+<div id="page-wrapper">
+
+<div id="header">
+
+    <h1><a href="/p5/home">Damien Chedan</a></h1>
+
+    <nav id="nav">
+
+    <ul>
+        <li>
+            <a href=/p5/>Accueil</a>
+        </li>
+        <li id="blog">
+            <a href=/p5/blog>Blog</a>
+        </li>
+    {% if session.get('id') %}
+        <li id="mon-compte">
+            <a href=/p5/mon-compte/>Mon compte</a>
+        </li>
+        <li id="logout">
+            <a href=/p5/logout>Déconnexion</a>
+        </li>
+        {% else %}
+            <li id="login">
+                <a href=/p5/login>Connexion</a>
+            </li>
+            <li id="registration">
+                <a href=/p5/registration>Inscription</a>
+            </li>
+    {% endif %}
+    </ul>
+    </nav>
+</div>
+
+<section id="main">
+    <div class="container">
+        {% block body %}
+        {% endblock %}
+    </div>
+</section>
+
+    <!-- Scripts -->
+    <script src="/p5/public/js/jquery.min.js"></script>
+    <script src="/p5/public/js/jquery.dropotron.min.js"></script>
+    <script src="/p5/public/js/browser.min.js"></script>
+    <script src="/p5/public/js/breakpoints.min.js"></script>
+    <script src="/p5/public/js/util.js"></script>
+    <script src="/p5/public/js/main.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+    <script src="/p5/public/js/form.js"></script>
+    <script src="/p5/public/js/nav.js"></script>
+
+</div>
+</body>
+</html>

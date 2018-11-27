@@ -1,0 +1,8 @@
+{% extends "layout.html.twig" %}
+{% block body %}
+<section>
+    {% if showForm == false %}
+    <p>Vous n'avez pas les droits nécessaires pour pouvoir supprimer ce post</p>
+    {% endif %}
+</section>
+{% endblock %}

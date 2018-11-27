@@ -1,0 +1,25 @@
+{% extends "layout.html.twig" %}
+{% block body %}
+<section>
+    {% if showForm %}
+
+    <p>Toutes les informations du compte, y compris articles et commentaires seront définitivement supprimé</p>
+
+    <form action="/p5/delete-account/{{ id }}" method="post">
+        <p>
+            <br />
+
+            <label>Mot de passe (obligatoire)</label><br>
+            <input type="password" name="password" value=""/><br />
+
+            <input type="hidden" name="token" id="token" value="{{ session.get('token') }}" />
+
+            <input type="submit" value="Supprimer" />
+        </p>
+    </form>
+
+    {% else %}
+    <p>Vous n'avez pas les droits nécessaires pour pouvoir supprimer ce compte</p>
+    {% endif %}
+</section>
+{% endblock %}

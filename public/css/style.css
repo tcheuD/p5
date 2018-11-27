@@ -1,0 +1,31 @@
+body
+{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+#nav
+{
+    display: flex;
+    justify-content: center;
+}
+
+#nav li
+{
+    margin-left: 1em;
+    margin-right: 1em;
+    list-style-type: none;
+}
+
+#section_wrapper
+{
+    display: flex;
+    justify-content: center;
+}
+
+section
+{
+    width: 100vw;
+    justify-content: center;
+}

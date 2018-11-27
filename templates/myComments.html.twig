@@ -1,0 +1,25 @@
+{% extends "layout.html.twig" %}
+    {% block body %}
+<section>
+    <header class="major">
+        <h2>Mes commentaires</h2>
+    </header>
+    <div class="row">
+    {% for comment in comments %}
+        <div class="col-6 col-12-small">
+            <section class="box">
+                <header>
+                    <h3><strong>sujet :</strong> <em>{{ comment.postId.title }}</em></h3>
+                </header>
+                <p>{{ comment.comment|slice(1, 50) }}</p>
+                <footer>
+                    <ul class="actions">
+                        <li><a href="/p5/blog/post/{{ comment.postId.id }}" class="button icon fa-file-text">Lire la suite</a></li>
+                    </ul>
+                </footer>
+            </section>
+        </div>
+    {% endfor %}
+    </div>
+</section>
+{% endblock %}

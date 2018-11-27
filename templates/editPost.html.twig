@@ -1,0 +1,22 @@
+{% extends "layout.html.twig" %}
+{% block body %}
+<section>
+    {% if showForm %}
+
+    <form action="/p5/blog/editPost/{{ post.id }}" method="post">
+        <p>
+            <label>Titre</label><br>
+            <input type="text" name="title" value="{{ post.title }}"/><br/>
+
+            <label>Contenu</label><br>
+            <textarea name="content" rows="7" cols="50">{{ post.content }}</textarea><br/>
+
+            <input type="hidden" name="token" id="token" value="{{ session.get('token') }}" />
+            <input type="submit" value="Modifier"/>
+        </p>
+    </form>
+    {% else %}
+    <p>Vous n'avez pas l'autorisation d'acceder a cette page</p>
+    {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "layout.html.twig" %}
+{% block body %}
+
+    {% if session.get('id') %}
+<ul class="actions">
+    <li>
+        <a href=/p5/mon-compte/articles class="button alt">{{ postsNumber }} articles en ligne</a>
+    </li>
+       <li>
+           <a href=/p5/mon-compte/commentaires class="button alt">{{ commentsNumber }} commentaires en ligne</a>
+       </li>
+    <li>
+        <a href=/p5/edit-account/{{ session.get('id') }} class="button alt">Modifier mon compte</a>
+    </li>
+    <li>
+        <a href=/p5/delete-account/{{ session.get('id') }} class="button alt">Supprimer mon compte</a>
+    </li>
+</ul>
+
+    {% else %}
+    <p>Vous devez être connecté pour pouvoir accéder a cette page</p>
+    {% endif %}
+
+{% endblock %}

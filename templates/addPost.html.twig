@@ -1,0 +1,20 @@
+{% extends "layout.html.twig" %}
+{% block body %}
+    {% if session.get('id') %}
+    <form action="/p5/blog/addPost" method="post">
+        <p>
+            <label>Titre</label><br>
+            <input type="text" name="title" value="" /><br />
+
+            <label>Contenu</label><br>
+            <textarea name="content" rows="7" cols="50"></textarea><br />
+
+            <input type="hidden" name="token" id="token" value="{{ session.get('token') }}" />
+
+            <button type="submit">Ajouter</button>
+        </p>
+    </form>
+    {% else %}
+        <p>Vous devez être connecté pour pouvoir ajouter un post</p>
+    {% endif %}
+{% endblock %}

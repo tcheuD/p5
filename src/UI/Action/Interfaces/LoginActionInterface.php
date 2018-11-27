@@ -1,0 +1,16 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: agathe
+ * Date: 16/08/2018
+ * Time: 16:13
+ */
+
+namespace App\UI\Action\Interfaces;
+
+use Core\Interfaces\RequestInterface;
+
+interface LoginActionInterface
+{
+    public function __invoke(RequestInterface $request);
+}
