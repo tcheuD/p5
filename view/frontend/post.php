@@ -6,19 +6,18 @@ $title = $post->getTitle(); ?>
 <?php ob_start();
 
 if (isset($_SESSION['id'])) {
+
     $authorId = intval($post->getUser()->getId());
-if ($_SESSION['id'] == $authorId) {
+
+if ($_SESSION['id'] == $authorId || $admin) {
 ?>
 
-<section>
     <a href=../editPost/<?= $id ?>>Modifier</a>
     <a href=../deletePost/<?= $id ?>>Supprimer</a>
     <?php
     }
     }
     ?>
-
-    <h1><?= $post->getTitle(); ?></h1>
     <p>auteur : <?= $post->getUser()->getNickname(); ?></p>
 
     <article><?= $post->getContent(); ?></article>
@@ -26,7 +25,7 @@ if ($_SESSION['id'] == $authorId) {
     <form action="/p5/post/<?= $id ?>" method="post">
         <p>
             <label>Ecrire un commentaire :</label><br>
-            <textarea name="comment" rows="7" cols="50"></textarea><br/>
+            <textarea name="comment" rows="3" cols="50"></textarea><br/>
 
             <input type="submit" value="envoyer"/>
         </p>
@@ -37,7 +36,7 @@ if ($_SESSION['id'] == $authorId) {
 
         if (isset($_SESSION['id']))
         {
-            if($_SESSION['id'] == $com->getUser()->getId()){
+            if($_SESSION['id'] == $com->getUser()->getId() || ($admin)){
                 echo '<a href=../editComment/' . $com->getId()
                     . '>Edit</a> <a href=../deleteComment/' . $com->getId()
                     . '>Delete</a> ';
@@ -49,8 +48,6 @@ if ($_SESSION['id'] == $authorId) {
     }
     ?>
 
-
-</section>
 
 <?php $content = ob_get_clean();
 require loadTemplate('template.php');
