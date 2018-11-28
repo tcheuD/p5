@@ -3,7 +3,7 @@
 
 <section>
     {% if account.id == session.get("id") or session.isAdmin() %}
-    <form action="/p5/edit-account/{{ id }}" method="post">
+    <form action="/edit-account/{{ id }}" method="post">
         <p>
             <label>Pseudo</label><br>
             <input type="text" name="nickname" value="{{ account.nickname }}"/><br/>

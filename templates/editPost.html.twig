@@ -3,7 +3,7 @@
 <section>
     {% if showForm %}
 
-    <form action="/p5/blog/editPost/{{ post.id }}" method="post">
+    <form action="/blog/editPost/{{ post.id }}" method="post">
         <p>
             <label>Titre</label><br>
             <input type="text" name="title" value="{{ post.title }}"/><br/>

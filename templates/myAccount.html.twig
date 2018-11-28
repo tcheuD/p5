@@ -4,16 +4,16 @@
     {% if session.get('id') %}
 <ul class="actions">
     <li>
-        <a href=/p5/mon-compte/articles class="button alt">{{ postsNumber }} articles en ligne</a>
+        <a href="/mon-compte/articles" class="button alt">{{ postsNumber }} articles en ligne</a>
     </li>
        <li>
-           <a href=/p5/mon-compte/commentaires class="button alt">{{ commentsNumber }} commentaires en ligne</a>
+           <a href="/mon-compte/commentaires" class="button alt">{{ commentsNumber }} commentaires en ligne</a>
        </li>
     <li>
-        <a href=/p5/edit-account/{{ session.get('id') }} class="button alt">Modifier mon compte</a>
+        <a href="/edit-account/{{ session.get('id') }}" class="button alt">Modifier mon compte</a>
     </li>
     <li>
-        <a href=/p5/delete-account/{{ session.get('id') }} class="button alt">Supprimer mon compte</a>
+        <a href="/delete-account/{{ session.get('id') }}" class="button alt">Supprimer mon compte</a>
     </li>
 </ul>
 

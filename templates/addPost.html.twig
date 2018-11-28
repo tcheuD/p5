@@ -1,7 +1,7 @@
 {% extends "layout.html.twig" %}
 {% block body %}
     {% if session.get('id') %}
-    <form action="/p5/blog/addPost" method="post">
+    <form action="/blog/addPost" method="post">
         <p>
             <label>Titre</label><br>
             <input type="text" name="title" value="" /><br />

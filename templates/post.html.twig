@@ -3,8 +3,8 @@
 {% if session.get('id') %}
 {% if post.user.id == session.get('id') or session.isAdmin() %}
 
-        <a href="/p5/blog/editPost/{{ id }}" class="button alt">Modifier</a>
-    <button src="/p5/blog/deletePost/{{ id }}" class="button alt delete" value="{{ session.get('token') }}">Supprimer</button>
+        <a href="/blog/editPost/{{ id }}" class="button alt">Modifier</a>
+    <button src="/blog/deletePost/{{ id }}" class="button alt delete" value="{{ session.get('token') }}">Supprimer</button>
 
 {% endif %}
 {% endif %}
@@ -21,7 +21,7 @@
 
     </article>
     {% if session.get('id') %}
-<form action="/p5/blog/post/{{ id }}" method="post">
+<form action="/blog/post/{{ id }}" method="post">
     <p>
         <label>Ecrire un commentaire :</label><br>
         <textarea name="comment" rows="3" cols="50"></textarea><br/>
@@ -32,15 +32,15 @@
         {% else %}
         <strong>Vous devez être connecté pour pouvoir écrire un commentaire</strong>
         <h4>
-            <a href="/p5/login">Connexion</a>
-            <a href="/p5/registration">Inscription</a>
+            <a href="/login">Connexion</a>
+            <a href="/registration">Inscription</a>
         </h4>
     {% endif %}
 {% for com in coms %}
 {% if session.get('id') %}
 {% if com.user.id == session.get('id') or session.isAdmin() %}
-    <a href="/p5/blog/editComment/{{ com.id }}" class="button alt">Modifier</a>
-    <button src="/p5/blog/deleteComment/{{ com.id }}" class="button alt delete" value="{{ session.get('token') }}">Supprimer</button>
+    <a href="/blog/editComment/{{ com.id }}" class="button alt">Modifier</a>
+    <button src="/blog/deleteComment/{{ com.id }}" class="button alt delete" value="{{ session.get('token') }}">Supprimer</button>
 
 {% endif %}
 {% endif %}

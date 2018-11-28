@@ -3,7 +3,7 @@
 
 <section>
     {% if showForm %}
-    <form action="/p5/blog/editComment/{{ comment.id }}" method="post">
+    <form action="/blog/editComment/{{ comment.id }}" method="post">
         <p>
             <label>modifier le commentaire :</label><br>
             <textarea name="comment" rows="7" cols="50">{{ comment.comment }}</textarea><br />

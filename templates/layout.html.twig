@@ -13,30 +13,30 @@
 
 <div id="header">
 
-    <h1><a href="/p5/home">Damien Chedan</a></h1>
+    <h1><a href="/">Damien Chedan</a></h1>
 
     <nav id="nav">
 
     <ul>
         <li>
-            <a href=/p5/>Accueil</a>
+            <a href="/">Accueil</a>
         </li>
         <li id="blog">
             <a href=/p5/blog>Blog</a>
         </li>
     {% if session.get('id') %}
         <li id="mon-compte">
-            <a href=/p5/mon-compte/>Mon compte</a>
+            <a href="/mon-compte/">Mon compte</a>
         </li>
         <li id="logout">
-            <a href=/p5/logout>Déconnexion</a>
+            <a href="/logout">Déconnexion</a>
         </li>
         {% else %}
             <li id="login">
-                <a href=/p5/login>Connexion</a>
+                <a href="/login">Connexion</a>
             </li>
             <li id="registration">
-                <a href=/p5/registration>Inscription</a>
+                <a href="/registration">Inscription</a>
             </li>
     {% endif %}
     </ul>
@@ -51,15 +51,15 @@
 </section>
 
     <!-- Scripts -->
-    <script src="/p5/public/js/jquery.min.js"></script>
-    <script src="/p5/public/js/jquery.dropotron.min.js"></script>
-    <script src="/p5/public/js/browser.min.js"></script>
-    <script src="/p5/public/js/breakpoints.min.js"></script>
-    <script src="/p5/public/js/util.js"></script>
-    <script src="/p5/public/js/main.js"></script>
+    <script src="/public/js/jquery.min.js"></script>
+    <script src="/public/js/jquery.dropotron.min.js"></script>
+    <script src="/public/js/browser.min.js"></script>
+    <script src="/public/js/breakpoints.min.js"></script>
+    <script src="/public/js/util.js"></script>
+    <script src="/public/js/main.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
-    <script src="/p5/public/js/form.js"></script>
-    <script src="/p5/public/js/nav.js"></script>
+    <script src="/public/js/form.js"></script>
+    <script src="/public/js/nav.js"></script>
 
 </div>
 </body>
