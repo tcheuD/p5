@@ -2,65 +2,65 @@
 
 return [
     'homepage' => [
-        'path' => '/p5/',
+        'path' => '/',
         'methods' => ['GET'],
         'action' => 'App\UI\Action\HomeAction'
     ],
 
     'blog' => [
-        'path' => '/p5/blog',
+        'path' => '/blog',
         'methods' => ['GET'],
         'action' => 'App\UI\Action\ListPostsAction'
     ],
 
     'addAccount' => [
-        'path' => '/p5/add-account',
+        'path' => '/add-account',
         'methods' => ['GET', 'POST'],
         'action' => 'App\UI\Action\AddAccountAction',
         'params' =>['nickname' => 'char', 'users_group' => 'int', 'email' => 'varchar', 'password' => 'char']
     ],
 
     'EditAccount' => [
-        'path' => '/p5/edit-account/{id}',
+        'path' => '/edit-account/{id}',
         'methods' => ['GET', 'POST'],
         'action' => 'App\UI\Action\EditAccountAction',
         'params' =>['id' => '(\d+)', 'nickname' => 'char', 'users_group' => 'var', 'email' => 'varchar', 'password' => 'char']
     ],
 
     'deleteAccount' => [
-        'path' => '/p5/delete-account/{id}',
+        'path' => '/delete-account/{id}',
         'methods' => ['GET', 'POST'],
         'action' => 'App\UI\Action\DeleteAccountAction',
         'params' =>['id' => '(\d+)']
     ],
 
     'contactPage' => [
-       'path' => '/p5/contact',
+       'path' => '/contact',
        'methods' => ['GET'],
        'action' => 'contact'
     ],
 
     'logoutPage' => [
-        'path' => '/p5/logout',
+        'path' => '/logout',
         'methods' => ['GET'],
         'action' => 'App\UI\Action\LogoutAction'
     ],
 
     'myAccount' => [
-        'path' => '/p5/mon-compte/',
+        'path' => '/mon-compte/',
         'methods' => ['GET', 'POST'],
         'action' => 'App\UI\Action\MyAccountAction'
     ],
 
     'addNewPost' => [
-        'path' => '/p5/blog/addPost',
+        'path' => '/blog/addPost',
         'methods' => ['GET', 'POST'],
         'action' => 'App\UI\Action\AddPostAction',
         'params' =>['titre' => 'char', 'content' => 'varchar']
     ],
 
     'registrationPage' =>[
-        'path' => '/p5/registration',
+        'path' => '/registration',
         'methods' => ['GET', 'POST'],
         'action' => 'App\UI\Action\RegistrationAction',
         'params' =>['nickname' => 'char', 'email' => 'varchar', 'password' => 'char']
@@ -68,21 +68,21 @@ return [
 
 
     'deletePost' => [
-        'path' => '/p5/blog/deletePost/{id}',
+        'path' => '/blog/deletePost/{id}',
         'methods' => ['GET', 'POST'],
         'action' => 'App\UI\Action\DeletePostAction',
         'params' =>['id' => '(\d+)']
     ],
 
     'deleteComment' => [
-        'path' => '/p5/blog/deleteComment/{id}',
+        'path' => '/blog/deleteComment/{id}',
         'methods' => ['GET', 'POST'],
         'action' => 'App\UI\Action\DeleteCommentAction',
         'params' =>['id' => '(\d+)']
     ],
 
     'editPost' => [
-        'path' => '/p5/blog/editPost/{id}',
+        'path' => '/blog/editPost/{id}',
         'methods' => ['GET', 'POST'],
         'action' => 'App\UI\Action\EditPostAction',
         'params' =>['id' => '(\d+)', 'titre' => 'char', 'content' => 'varchar']
@@ -97,7 +97,7 @@ return [
 
 
     'login' => [
-        'path' => '/p5/login',
+        'path' => '/login',
         'methods' => ['GET', 'POST'],
         'action' => 'App\UI\Action\LoginAction',
         'params' =>['pseudo' => 'char', 'password' => 'char']
@@ -111,13 +111,13 @@ return [
     ],
 
     'MyPosts' => [
-         'path' => '/p5/mon-compte/articles',
+         'path' => '/mon-compte/articles',
          'methods' => ['GET', 'POST'],
          'action' => 'App\UI\Action\MyPosts',
     ],
 
     'MyComments' => [
-    'path' => '/p5/mon-compte/commentaires',
+    'path' => '/mon-compte/commentaires',
     'methods' => ['GET', 'POST'],
     'action' => 'App\UI\Action\MyComments',
     ]
