@@ -13,9 +13,12 @@
                         <section class="box">
                             <header>
                                 <h3>{{ post.title }}</h3>
-                                <p>{{ post.creationDate }}</p>
+                                <p>le {{ post.creationDate|date("d/m/Y à H\\hi") }}</p>
                             </header>
                             <p>{{ post.content|slice(1, 50) }}</p>
+                            {% if post.modificationDate is not empty %}
+                                <em>Dernière modification le : {{ post.modificationDate|date("d/m/Y à H\\hi") }}</em>
+                            {% endif %}
                             <footer>
                                 <ul class="actions">
                                     <li><a href="/blog/post/{{ post.id }}" class="button icon fa-file-text">Lire la suite</a></li>
