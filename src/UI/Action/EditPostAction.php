@@ -37,9 +37,8 @@ class EditPostAction implements EditPostActionInterface
                 if (isset($_POST["title"], $_POST["content"])) {
 
                     $prepare = PostFactory::edit($post, $_POST);
-                    $status = $this->postRepository->editPost($prepare, $id);
+                    $this->postRepository->editPost($prepare, $id);
                     header("Location: /blog/post/$id");
-                    exit;
                 }
             } else $showForm = false;
         }

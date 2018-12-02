@@ -55,7 +55,7 @@ class EditAccountAction implements EditAccountActionInterface
             if (isset($pass)) {
 
                 $user = UserFactory::buildEdit($account, $_POST, $pass);
-                $status = $this->accountRepository->editAccount($user);
+                $this->accountRepository->editAccount($user);
             }
         }
 

@@ -39,7 +39,6 @@ class AddPostAction implements AddPostActionInterface
                     $post = PostFactory::add($_POST);
                     $status = $this->postRepository->addPost($post);
                     header("Location: post/$status");
-                    exit;
                 }
             }
         }

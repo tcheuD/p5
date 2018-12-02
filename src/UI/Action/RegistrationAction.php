@@ -45,9 +45,9 @@ class RegistrationAction implements RegistrationActionInterface
                     $alreadyExistValue = "Ce pseudo";
                 } else {
                     $pass = password_hash($_POST["password"], PASSWORD_DEFAULT);
-                    $user = $this->setUser($_POST, $pass);
+                    $this->setUser($_POST, $pass);
                     $user = $this->userFactory::buildRegistration($_POST, $pass);
-                    $status = $this->accountRepository->addAccount($user);
+                    $this->accountRepository->addAccount($user);
                     $alreadyExist = false;
                 }
             }

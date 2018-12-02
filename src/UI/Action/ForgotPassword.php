@@ -18,7 +18,6 @@ class ForgotPassword
     private $ipChecker;
     private $session;
     private $twig;
-    private $cooldown = false;
     private $mailFactory;
     private $mailer;
 

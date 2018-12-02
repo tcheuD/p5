@@ -37,11 +37,10 @@ class DeleteCommentAction implements DeleteCommentActionInterface
         if ($this->session->get('id')) {
             if ($this->userId = $this->session->get('id') || $this->session->isAdmin()) {
                 if ($this->token->checkValidity($this->session->get('token'), $_POST["token"])) {
-                    $status = $this->commentRepository->deleteComment($id);
+                    $this->commentRepository->deleteComment($id);
                     $postId = $comment->getPostId();
                     $showForm = true;
-                    header("Location: /p5/blog/post/$postId");
-                    exit;
+                    header("Location: /blog/post/$postId");
                 }
             }
         }

@@ -49,7 +49,7 @@ class ResetPassword
 
                 if (isset($pass)) {
                     $user = UserFactory::buildResetPassword($account, $pass);
-                    $status = $this->accountRepository->editAccount($user);
+                    $this->accountRepository->editAccount($user);
                 }
             }
         }

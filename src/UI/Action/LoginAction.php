@@ -37,7 +37,7 @@ class LoginAction implements LoginActionInterface
 
                 $pseudo = $_POST["nickname"];
                 $query = $this->accountRepository->getUserByNickname($pseudo);
-                // Check first if username exist
+
                 if ($query) {
                     $hashed_password = $query->getPassword();
                     $password = password_verify($_POST['password'], $hashed_password);
@@ -53,7 +53,6 @@ class LoginAction implements LoginActionInterface
                         $this->session->setToken();
 
                         header(sprintf("Location: %s", "/"));
-                        exit;
                     }
                 } else{
                     $this->ipChecker->bruteCheck(true);

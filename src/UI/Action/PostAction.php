@@ -35,16 +35,12 @@ class PostAction implements PostActionInterface
 
         $coms = $this->commentRepository->getComments($id);
 
-        if ($session->get('id')) {
-            $showFormComment = true;
-
             if (isset($_POST["comment"])) {
                 $comment = CommentFactory::add($_POST, $id);
                 $status = $this->commentRepository->postComment($comment);
                 header("refresh:0");
-                exit;
             }
-        } else $showFormComment = false;
+
         return new Response($this->twig->getTwig($request)->render('post.html.twig',
             array('post' => $post, 'id' => $id, 'coms' => $coms)));
     }

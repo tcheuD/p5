@@ -8,7 +8,6 @@ use App\UI\Action\Interfaces\DeletePostActionInterface;
 use Core\Response;
 use Core\Token;
 use Core\Twig;
-use Yaf\Session;
 
 class DeletePostAction implements DeletePostActionInterface
 {
@@ -38,7 +37,7 @@ class DeletePostAction implements DeletePostActionInterface
             if ($post->getUser()->getId() == intval($this->session->get('id')) || $this->session->isAdmin()) {
                 if ($this->token->checkValidity($this->session->get('token'), $_POST["token"])) {
                     $showForm = true;
-                    $status = $this->postRepository->deletePost($id);
+                    $this->postRepository->deletePost($id);
                     $this->commentRepository->deleteAllFromPost($id);
                     header("Location: /p5/");
                 }
