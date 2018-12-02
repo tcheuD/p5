@@ -34,4 +34,18 @@ class UserFactory
         return $user;
     }
 
+    public static function buildSetPassIdentity($user, $pass)
+    {
+        $user->setForgotPassIdentity($pass);
+        return $user;
+    }
+
+    public static function buildResetPassword($user, $password)
+    {
+        $user->setPassword($password);
+        return $user;
+    }
+
+
+
 }

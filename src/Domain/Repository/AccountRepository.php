@@ -23,6 +23,8 @@ final class AccountRepository
                     WHERE email = :email');
         $query->bindValue(':email', $email, \PDO::PARAM_STR);
         $query->execute();
+        $query->setFetchMode(\PDO::FETCH_CLASS, User::class);
+
 
         return $query->fetch();
     }
@@ -107,6 +109,17 @@ final class AccountRepository
         return $query->fetch();
     }
 
+    public function getUserPassIdentity($pass)
+    {
+        $query = Database::dbConnect()->prepare(
+            "SELECT * FROM users WHERE forgot_pass_identity = :pass");
+        $query->bindValue(':pass', $pass, \PDO::PARAM_STR);
+        $query->execute();
+        $query->setFetchMode(\PDO::FETCH_CLASS, User::class);
+
+        return $query->fetch();
+    }
+
     public function updateUser(User $user)
     {
         $query = Database::dbConnect()->prepare("
@@ -116,6 +129,18 @@ final class AccountRepository
         );
         $query->bindValue(':id', $user->getId(), \PDO::PARAM_STR);
 
+        return $query->execute();
+    }
+
+    public function setUserPassIdentity(User $user)
+    {
+        $query = Database::dbConnect()->prepare("
+                                  UPDATE users 
+                                  SET forgot_pass_identity = :forgotPassIdentity
+                                  WHERE id = :id"
+        );
+        $query->bindValue(':forgotPassIdentity', $user->getForgotPassIdentity());
+        $query->bindValue(':id', $user->getId());
         return $query->execute();
     }
 

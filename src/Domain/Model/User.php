@@ -14,7 +14,7 @@ class User
     private $nickname;
     private $email;
     private $password;
-    private $validationToken;
+    private $forgot_pass_identity;
 
     public function getId()
     {
@@ -51,9 +51,9 @@ class User
         return $this->password;
     }
 
-    public function getValidationToken()
+    public function getForgotPassIdentity()
     {
-        return $this->validationToken;
+        return $this->forgot_pass_identity;
     }
 
     public function setId($id)
@@ -100,8 +100,8 @@ class User
         $this->password = $password;
     }
 
-    public function setValidationToken($validation_token)
+    public function setForgotPassIdentity($forgotPassIdentity)
     {
-        $this->validationToken = $validation_token;
+        $this->forgot_pass_identity = $forgotPassIdentity;
     }
 }
