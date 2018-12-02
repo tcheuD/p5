@@ -1,8 +1,5 @@
 $('.delete').on('click', function(){
 
-    //var src = $(".delete").attr('src');
-    //var token =  $(".delete").val();
-
     var src = $(this).attr('src');
     var token = $(this).val();
 

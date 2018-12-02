@@ -81,7 +81,6 @@ class SessionHandler
 
 
 
-    //TODO: move to class
     public function isAdmin() {
 
         if (isset($_SESSION["users_group"])){

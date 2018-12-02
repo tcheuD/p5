@@ -48,4 +48,3 @@ class MyAccountAction
         return $number;
     }
 }
-

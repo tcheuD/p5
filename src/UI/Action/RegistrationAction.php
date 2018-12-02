@@ -66,7 +66,3 @@ class RegistrationAction implements RegistrationActionInterface
         return $user;
     }
 }
-
-
-
-

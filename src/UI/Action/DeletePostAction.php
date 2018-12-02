@@ -49,4 +49,3 @@ class DeletePostAction implements DeletePostActionInterface
     }
 }
 
-

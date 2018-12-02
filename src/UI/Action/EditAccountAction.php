@@ -43,7 +43,6 @@ class EditAccountAction implements EditAccountActionInterface
             if (isset($_POST["password"]) || isset($_POST["passwordConfirmation"])) {
 
                 if ($_POST["password"] === $_POST["passwordConfirmation"]) {
-                    //TODO password_hash -> class appel static
                     $pass = password_hash($_POST["password"], PASSWORD_DEFAULT);
                 } else {
                     $this->passwordDontMatch = true;

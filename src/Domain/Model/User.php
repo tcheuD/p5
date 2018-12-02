@@ -68,7 +68,6 @@ class User
 
     public function setUsersGroup($users_group)
     {
-        //TODO replace users groups by CONST instead of number
         $this->users_group = intval($users_group);
     }
 

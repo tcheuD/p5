@@ -52,7 +52,6 @@ class LoginAction implements LoginActionInterface
                         $this->session->set('email', $query->getEmail());
                         $this->session->setToken();
 
-//TODO create header response class
                         header(sprintf("Location: %s", "/"));
                         exit;
                     }
