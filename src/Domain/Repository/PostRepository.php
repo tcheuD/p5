@@ -65,8 +65,8 @@ final class PostRepository
                              posts.user_id user,
                              posts.title,
                              posts.content,
-                             posts.modification_date,
-                             DATE_FORMAT(posts.creation_date, \'%d/%m/%Y à %Hh% imin%ss\')
+                             posts.creation_date creationDate,
+                             posts.modification_date modificationDate
                       FROM posts 
                       INNER JOIN users 
                       on posts.user_id = users.id
