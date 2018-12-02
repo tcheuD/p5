@@ -15,6 +15,12 @@
         <h4>
             par : {{ post.user.nickname }}
         </h4>
+        <p>
+            Le : {{ post.creationDate|date("d/m/Y à H\\hi") }}<br />
+            {% if post.modificationDate is not empty %}
+            Dernière modification le : {{ post.modificationDate|date("d/m/Y à H\\hi") }}
+            {% endif %}
+        </p>
     </h2>
 
 {{ post.content }}
