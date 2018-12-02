@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>{% block title %}P5{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="/p5/public/css/main.css" />
+    <link rel="stylesheet" href="/public/css/main.css" />
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css">
 
 </head>
@@ -22,7 +22,7 @@
             <a href="/">Accueil</a>
         </li>
         <li id="blog">
-            <a href=/p5/blog>Blog</a>
+            <a href="/blog">Blog</a>
         </li>
     {% if session.get('id') %}
         <li id="mon-compte">
@@ -49,6 +49,22 @@
         {% endblock %}
     </div>
 </section>
+
+    <section id="footer">
+        <div class="container">
+        <ul class="social">
+            <li>
+                <a class="icon fa-twitter" href="https://twitter.com/tcheuD"></a>
+            </li>
+            <li>
+                <a class="icon fa-linkedin" href="https://www.linkedin.com/in/damienchedan/"></a>
+            </li>
+            <li>
+                <a class="icon fa-github" href="https://github.com/tcheuD"></a>
+            </li>
+        </ul>
+    </div>
+    </section>
 
     <!-- Scripts -->
     <script src="/public/js/jquery.min.js"></script>
