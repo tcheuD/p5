@@ -10,11 +10,11 @@
 
             {% if session.isAdmin() %}
 
-                Type d'utilisateur :<br/>
-            <input type="radio" name="users_group" value=1 {{ usersGroupMember }} id="user"/> <label
-                    for=1>Membre</label><br/>
-            <input type="radio" name="users_group" value=2 {{ usersGroupAdmin }} id="admin"/> <label for=2>Administrateur</label>
-            <br/>
+                <label>Type d'utilisateur :</label>
+                <label for=1>Membre</label>
+            <input type="radio" name="users_group" value=1 {{ usersGroupMember }} class="radio" id="user"/>
+                <label for=2>Administrateur</label>
+            <input type="radio" name="users_group" value=2 {{ usersGroupAdmin }} class="radio" id="admin"/>
 
             {% endif %}
 
