@@ -6,6 +6,7 @@ use App\Domain\Repository\CommentRepository;
 use App\UI\Action\Interfaces\DeleteCommentActionInterface;
 use Core\Interfaces\RequestInterface;
 use Core\Response;
+use Core\Token;
 use Core\Twig;
 
 class DeleteCommentAction implements DeleteCommentActionInterface
@@ -14,11 +15,15 @@ class DeleteCommentAction implements DeleteCommentActionInterface
     private $session;
     private $twig;
     private $userId;
+    private $token;
+
 
     public function __construct()
     {
         $this->commentRepository = new CommentRepository();
         $this->twig = new Twig();
+        $this->token= new Token();
+
     }
 
     public function __invoke(RequestInterface $request, $id)
@@ -27,12 +32,17 @@ class DeleteCommentAction implements DeleteCommentActionInterface
         $this->session = $request->getSession();
         $comment = $this->commentRepository->getComment($id);
         $this->userId = $comment->getUser();
+        $showForm = false;
 
         if ($this->session->get('id')) {
             if ($this->userId = $this->session->get('id') || $this->session->isAdmin()) {
-                $status = $this->commentRepository->deleteComment($id);
-                $postId = $comment->getPostId();
-                header("Location: /p5/post/$postId");
+                if ($this->token->checkValidity($this->session->get('token'), $_POST["token"])) {
+                    $status = $this->commentRepository->deleteComment($id);
+                    $postId = $comment->getPostId();
+                    $showForm = true;
+                    header("Location: /p5/blog/post/$postId");
+                    exit;
+                }
             }
         }
 

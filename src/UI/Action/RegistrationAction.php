@@ -24,8 +24,10 @@ class RegistrationAction implements RegistrationActionInterface
 
     public function __invoke($request)
     {
+        $alreadyExist = false;
+        $alreadyExistValue = false;
+
         if (isset($_POST["nickname"], $_POST["password"], $_POST["passwordConfirmation"], $_POST["email"])) {
-            $users_group = 1;
 
             if ($_POST["password"] === $_POST["passwordConfirmation"]) {
 
@@ -49,9 +51,8 @@ class RegistrationAction implements RegistrationActionInterface
                     $alreadyExist = false;
                 }
             }
-
         }
-        return new Response($this->twig->getTwig($request)->render('listPosts.html.twig',
+        return new Response($this->twig->getTwig($request)->render('registration.html.twig',
             array('alreadyExist' => $alreadyExist, 'alreadyExistValue' => $alreadyExistValue)));
     }
 

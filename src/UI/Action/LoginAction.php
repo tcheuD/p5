@@ -33,25 +33,29 @@ class LoginAction implements LoginActionInterface
         if ($deny_login){
             $this->cooldown = true;
         } else {
-            if (isset($_POST["pseudo"], $_POST["password"])) {
+            if (isset($_POST["nickname"], $_POST["password"])) {
 
-                $pseudo = $_POST["pseudo"];
+                $pseudo = $_POST["nickname"];
                 $query = $this->accountRepository->getUserByNickname($pseudo);
-                $hashed_password = $query->getPassword();
-                $password = password_verify($_POST['password'], $hashed_password);
-//TODO: abort when username dont exist
-                if ($password) {
-                    $this->accountRepository->updateUser($query);
+                // Check first if username exist
+                if ($query) {
+                    $hashed_password = $query->getPassword();
+                    $password = password_verify($_POST['password'], $hashed_password);
+                    if ($password) {
+                        $this->accountRepository->updateUser($query);
 
-                    $this->session->set('nickname', $query->getNickname());
-                    $this->session->set('id', $query->getId());
-                    $this->session->set('users_group', $query->getUsersGroup());
-                    $this->session->set('registration_date', $query->getRegistrationDate());
-                    $this->session->set('last_connection', $query->getLastConnection());
-                    $this->session->set('email', $query->getEmail());
+                        $this->session->set('nickname', $query->getNickname());
+                        $this->session->set('id', $query->getId());
+                        $this->session->set('users_group', $query->getUsersGroup());
+                        $this->session->set('registration_date', $query->getRegistrationDate());
+                        $this->session->set('last_connection', $query->getLastConnection());
+                        $this->session->set('email', $query->getEmail());
+                        $this->session->setToken();
 
-                    header("Location:/p5/");
-                    exit;
+//TODO create header response class
+                        header(sprintf("Location: %s", "/"));
+                        exit;
+                    }
                 } else{
                     $this->ipChecker->bruteCheck(true);
                     $this->incorrectInfos = true;

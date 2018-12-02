@@ -6,7 +6,9 @@ use App\Domain\Repository\CommentRepository;
 use App\Domain\Repository\PostRepository;
 use App\UI\Action\Interfaces\DeletePostActionInterface;
 use Core\Response;
+use Core\Token;
 use Core\Twig;
+use Yaf\Session;
 
 class DeletePostAction implements DeletePostActionInterface
 {
@@ -14,17 +16,18 @@ class DeletePostAction implements DeletePostActionInterface
     private $commentRepository;
     private $session;
     private $twig;
+    private $token;
 
     public function __construct()
     {
         $this->postRepository = new PostRepository();
         $this->commentRepository = new CommentRepository();
         $this->twig = new Twig();
+        $this->token = new Token();
     }
 
-
-    public function __invoke($request, $id) {
-
+    public function __invoke($request, $id)
+    {
 
         $this->session = $request->getSession();
         $post = $this->postRepository->getPost($id);
@@ -33,6 +36,7 @@ class DeletePostAction implements DeletePostActionInterface
         if ($this->session->get('id')) {
 
             if ($post->getUser()->getId() == intval($this->session->get('id')) || $this->session->isAdmin()) {
+                if ($this->token->checkValidity($this->session->get('token'), $_POST["token"])) {
                     $showForm = true;
                     $status = $this->postRepository->deletePost($id);
                     $this->commentRepository->deleteAllFromPost($id);
@@ -40,6 +44,7 @@ class DeletePostAction implements DeletePostActionInterface
                 }
             }
 
+        }
         return new Response($this->twig->getTwig($request)->render('deletePost.html.twig', ['showForm' => $showForm]));
     }
 }

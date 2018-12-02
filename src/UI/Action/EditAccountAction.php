@@ -28,7 +28,7 @@ class EditAccountAction implements EditAccountActionInterface
         $this->session = $request->getSession();
         $account = $this->accountRepository->getUser($id);
 
-        if ($account->getUsersGroup() !== null) {
+        if (!\is_null($account->getUsersGroup())) {
             if ($account->getUsersGroup() == 2) {
                 $usersGroupAdmin = "checked=\"checked\"";
                 $usersGroupMember = "";
@@ -43,10 +43,15 @@ class EditAccountAction implements EditAccountActionInterface
             if (isset($_POST["password"]) || isset($_POST["passwordConfirmation"])) {
 
                 if ($_POST["password"] === $_POST["passwordConfirmation"]) {
+                    //TODO password_hash -> class appel static
                     $pass = password_hash($_POST["password"], PASSWORD_DEFAULT);
-                } else $this->passwordDontMatch = true;
+                } else {
+                    $this->passwordDontMatch = true;
+                }
 
-            } else $pass = $account->getPassword();
+            } else {
+                $pass = $account->getPassword();
+            }
 
             if (isset($pass)) {
 
@@ -54,6 +59,7 @@ class EditAccountAction implements EditAccountActionInterface
                 $status = $this->accountRepository->editAccount($user);
             }
         }
+
         return new Response($this->twig->getTwig($request)->render('editAccount.html.twig', array(
             'id' => $id,
             'usersGroupMember' => $usersGroupMember,
