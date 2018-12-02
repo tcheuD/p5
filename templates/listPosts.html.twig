@@ -5,7 +5,7 @@
             <h2>Blog</h2>
         </header>
             {% if session.get('id') %}
-                <a href="/blog/addPost" class="button alt">Ajouter un article</a>
+                <a href="/blog/addPost" class="button alt button-block">Ajouter un article</a>
             {% endif %}
         <div class="row">
         {% for post in posts %}
@@ -13,15 +13,16 @@
                         <section class="box">
                             <header>
                                 <h3>{{ post.title }}</h3>
-                                <p>le {{ post.creationDate|date("d/m/Y à H\\hi") }}</p>
+                                {% if post.modificationDate is not empty %}
+                                    <p>Dernière modification le : {{ post.modificationDate|date("d/m/Y à H\\hi") }}</p>
+                                    {% else %}
+                                        <p>le {{ post.creationDate|date("d/m/Y à H\\hi") }}</p>
+                                {% endif %}
                             </header>
                             <p>{{ post.content|slice(1, 50) }}</p>
-                            {% if post.modificationDate is not empty %}
-                                <em>Dernière modification le : {{ post.modificationDate|date("d/m/Y à H\\hi") }}</em>
-                            {% endif %}
                             <footer>
                                 <ul class="actions">
-                                    <li><a href="/blog/post/{{ post.id }}" class="button icon fa-file-text">Lire la suite</a></li>
+                                    <li><a href="/blog/post/{{ post.id }}" class="button icon fa-file-text button-list-post">Lire la suite</a></li>
                                 </ul>
                             </footer>
                         </section>
