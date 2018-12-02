@@ -21,7 +21,7 @@ return [
     ],
 
     'EditAccount' => [
-        'path' => '/edit-account/{id}',
+        'path' => '/mon-compte/edit-account/{id}',
         'methods' => ['GET', 'POST'],
         'action' => 'App\UI\Action\EditAccountAction',
         'params' =>['id' => '(\d+)', 'nickname' => 'char', 'users_group' => 'var', 'email' => 'varchar', 'password' => 'char']
@@ -66,7 +66,6 @@ return [
         'params' =>['nickname' => 'char', 'email' => 'varchar', 'password' => 'char']
     ],
 
-
     'deletePost' => [
         'path' => '/blog/deletePost/{id}',
         'methods' => ['GET', 'POST'],
@@ -104,7 +103,7 @@ return [
     ],
 
     'postDetails' => [
-        'path' => '/p5/blog/post/{id}',
+        'path' => '/blog/post/{id}',
         'methods' => ['GET', 'POST'],
         'action' => 'App\UI\Action\PostAction',
         'params' => ['id' => '(\d+)']
@@ -120,6 +119,18 @@ return [
     'path' => '/mon-compte/commentaires',
     'methods' => ['GET', 'POST'],
     'action' => 'App\UI\Action\MyComments',
-    ]
+    ],
 
+    'ForgotPassword' => [
+        'path'=> '/login/forgot-password',
+        'methods' => ['GET', 'POST'],
+        'action' => 'App\UI\Action\ForgotPassword',
+    ],
+
+    'ResetPassword' => [
+        'path'=> '/login/reset-password/{pass}',
+        'methods' => ['GET', 'POST'],
+        'action' => 'App\UI\Action\ResetPassword',
+        'params' => ['pass' => '(\w+)']
+    ]
 ];
