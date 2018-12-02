@@ -45,7 +45,7 @@ final class Request implements RequestInterface
 
     public function getSession()
     {
-        if (\count($this->session) == 0) {
+        if (!$this->session) {
             $this->session = new SessionHandler();
         }
 
