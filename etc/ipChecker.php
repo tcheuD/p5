@@ -6,7 +6,6 @@ class IpChecker
 {
 
     public static function bruteCheck($failed_attempt = false) {
-        $deny_login = false;
 
         if(!file_exists(MM_BRUTE_FILE)) touch(MM_BRUTE_FILE);
         $cache = unserialize(self::fileToString(MM_BRUTE_FILE));
@@ -56,4 +55,3 @@ class IpChecker
         return true;
     }
 }
-?>

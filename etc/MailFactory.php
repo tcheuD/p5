@@ -38,5 +38,4 @@ class MailFactory
         return $mail;
     }
 
-
 }
