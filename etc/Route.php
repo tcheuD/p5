@@ -83,7 +83,7 @@ class Route
                     $path = strtr($this->path, ['{'.$key.'}' => $result[0]]);
 
                         $this->path = $path;
-                        $this->param = (int) $result[0];
+                        $this->param = $result[0];
                     } else {
                         return null;
                     }
