@@ -1,5 +1,6 @@
 {
     "name": "tcheud/p5",
+    "description": "Blog in OOP php",
     "license": "MIT",
     "authors": [
         {
