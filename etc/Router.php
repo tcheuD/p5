@@ -29,7 +29,7 @@ class Router
                 $value["methods"]
             );
         }
-        $this->routes= $route;
+        $this->routes = $route;
     }
 
 

@@ -29,15 +29,13 @@ class PostAction implements PostActionInterface
     public function __invoke(RequestInterface $request, $id)
     {
 
-        $session = $request->getSession();
-
         $post = $this->postRepository->getPost($id);
 
         $coms = $this->commentRepository->getComments($id);
 
             if (isset($_POST["comment"])) {
                 $comment = CommentFactory::add($_POST, $id);
-                $status = $this->commentRepository->postComment($comment);
+                $this->commentRepository->postComment($comment);
                 header("refresh:0");
             }
 
