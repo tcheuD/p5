@@ -13,7 +13,7 @@
 
 <div id="header">
 
-    <h1><a href="/">Damien Chedan</a></h1>
+    <h1><a href="/">DC</a></h1>
 
     <nav id="nav">
 
@@ -39,8 +39,13 @@
                 <a href="/registration">Inscription</a>
             </li>
     {% endif %}
+        <li id="contact">
+            <a href="/contact">Contact</a>
+        </li>
     </ul>
     </nav>
+    {% block header %}
+    {% endblock %}
 </div>
 
 <section id="main">
