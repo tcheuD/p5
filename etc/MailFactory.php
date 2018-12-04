@@ -27,12 +27,12 @@ class MailFactory
         return $mail;
     }
 
-    public static function contact($user, $subject, $message)
+    public static function contact($email, $name, $message)
     {
         $mail = new Mail();
-        $mail->setFrom($user);
+        $mail->setFrom($email);
         $mail->setTo('contact@damienchedan.fr');
-        $mail->setSubject($subject);
+        $mail->setSubject('contact' . $name);
         $mail->setMessage($message);
 
         return $mail;
