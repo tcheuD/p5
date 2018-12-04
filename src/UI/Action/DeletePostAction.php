@@ -40,6 +40,7 @@ class DeletePostAction implements DeletePostActionInterface
                     $this->postRepository->deletePost($id);
                     $this->commentRepository->deleteAllFromPost($id);
                     header("Location: /p5/");
+                    exit();
                 }
             }
 

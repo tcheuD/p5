@@ -12,7 +12,7 @@ class Database
             return new \PDO($config['driver'].':host='.$config["host"].';dbname='.$config['dbname'].';charset=utf8',
                 $config['username'], $config['password']);
         } catch (\Exception $e) {
-           echo 'Erreur : ' . $e->getMessage();
+           die('Erreur : ' . $e->getMessage());
         }
     }
 }

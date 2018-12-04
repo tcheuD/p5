@@ -41,6 +41,7 @@ class DeleteCommentAction implements DeleteCommentActionInterface
                     $postId = $comment->getPostId();
                     $showForm = true;
                     header("Location: /blog/post/$postId");
+                    exit();
                 }
             }
         }

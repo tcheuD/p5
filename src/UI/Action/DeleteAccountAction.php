@@ -50,6 +50,7 @@ class DeleteAccountAction implements DeleteAccountActionInterface
                         $this->accountRepository->deleteAccount($user);
                         $this->session->destroySession();
                         header("Location: /p5/");
+                        exit();
                 }
             }
         }

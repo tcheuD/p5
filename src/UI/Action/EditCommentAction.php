@@ -42,6 +42,7 @@ class EditCommentAction implements EditCommentActionInterface
                         $prepare = CommentFactory::edit($comment, $_POST);
                         $this->commentRepository->editComment($prepare);
                         header("Location: /blog/post/$postId");
+                        exit();
                     }
 
 

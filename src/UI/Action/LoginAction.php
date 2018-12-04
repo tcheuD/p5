@@ -53,6 +53,7 @@ class LoginAction implements LoginActionInterface
                         $this->session->setToken();
 
                         header(sprintf("Location: %s", "/"));
+                        exit();
                     }
                 } else{
                     $this->ipChecker->bruteCheck(true);
