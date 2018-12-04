@@ -37,7 +37,7 @@ return [
     'contactPage' => [
        'path' => '/contact',
        'methods' => ['GET'],
-       'action' => 'contact'
+       'action' => 'App\UI\Action\ContactAction'
     ],
 
     'logoutPage' => [
