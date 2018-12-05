@@ -33,7 +33,8 @@ final class PostRepository
                              posts.modification_date modificationDate
                       FROM posts 
                       INNER JOIN users 
-                      on posts.user_id = users.id          
+                      on posts.user_id = users.id
+                      ORDER BY posts.creation_date DESC
          ');
         $query->execute();
         $query->setFetchMode(\PDO::FETCH_CLASS, Post::class);
