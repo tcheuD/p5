@@ -33,7 +33,7 @@ class EditCommentAction implements EditCommentActionInterface
 
         if ($this->session->get('id')) {
 
-            if ($id == intval($this->session->get('id')) || $this->session->isAdmin()) {
+            if ($comment->getUser() == intval($this->session->get('id')) || $this->session->isAdmin()) {
 
                     $showForm = true;
 
