@@ -30,7 +30,7 @@ class EditPostAction implements EditPostActionInterface
 
         if ($this->session->get('id')) {
 
-            if ($id == intval($this->session->get('id')) || $this->session->isAdmin()) {
+            if ($post->getUser()->getId() == intval($this->session->get('id')) || $this->session->isAdmin()) {
 
                 $showForm = true;
 
