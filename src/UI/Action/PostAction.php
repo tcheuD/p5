@@ -17,6 +17,7 @@ class PostAction implements PostActionInterface
     private $accountRepository;
     private $commentRepository;
     private $twig;
+    private $session;
 
     public function __construct()
     {
@@ -30,13 +31,16 @@ class PostAction implements PostActionInterface
     {
 
         $post = $this->postRepository->getPost($id);
+        $this->session = $request->getSession();
 
         $coms = $this->commentRepository->getComments($id);
 
             if (isset($_POST["comment"])) {
-                $comment = CommentFactory::add($_POST, $id);
+                $comment = CommentFactory::add($_POST, $id, $this->session->get('id'));
+
                 $this->commentRepository->postComment($comment);
                 header("refresh:0");
+                exit();
             }
 
         return new Response($this->twig->getTwig($request)->render('post.html.twig',

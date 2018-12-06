@@ -5,12 +5,12 @@ use App\Domain\Model\Comment;
 
 class CommentFactory
 {
-    public static function add($data, $postId)
+    public static function add($data, $postId, $userId)
     {
         $comment = new Comment();
 
+        $comment->setUser($userId);
         $comment->setPostId($postId);
-        $comment->setUser(intval($_SESSION['id']));
         $comment->setComment($data["comment"]);
         return $comment;
     }
