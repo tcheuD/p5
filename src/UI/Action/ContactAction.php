@@ -2,16 +2,15 @@
 
 namespace App\UI\Action;
 
+use App\UI\Action\Interfaces\ContactActionInterface;
 use Core\Interfaces\RequestInterface;
 use Core\Mailer;
 use Core\MailFactory;
 use Core\Response;
 use Core\Twig;
 
-class ContactAction
+class ContactAction implements ContactActionInterface
 {
-    private $accountRepository;
-    private $userFactory;
     private $session;
     private $twig;
     private $mailFactory;
@@ -27,17 +26,16 @@ class ContactAction
     public function __invoke(RequestInterface $request)
     {
         $this->session = $request->getRequestUri();
+        $sent = false;
 
-        if (isset($_POST["email"])) {
+            if (isset($_POST['email'], $_POST['name'], $_POST['content'])) {
 
-            if (isset($_POST['mail'], $_POST['name'], $_POST['content'])) {
-
-                $mail = $this->mailFactory::contact($_POST['mail'], $_POST['name'], $_POST['content']);
+                $mail = $this->mailFactory::contact($_POST['email'], $_POST['name'], $_POST['content']);
                 $this->mailer->sendMail($mail);
+                $sent = true;
             }
-        }
 
-        return new Response($this->twig->getTwig($request)->render('contact.html.twig'));
+        return new Response($this->twig->getTwig($request)->render('contact.html.twig', array('sent' => $sent)));
     }
 
 }

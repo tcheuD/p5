@@ -5,10 +5,12 @@ namespace App\UI\Action;
 use App\Domain\Repository\AccountRepository;
 use App\Domain\Repository\CommentRepository;
 use App\Domain\Repository\PostRepository;
+use App\UI\Action\Interfaces\MyAccountActionInterface;
+use Core\Interfaces\RequestInterface;
 use Core\Response;
 use Core\Twig;
 
-class MyAccountAction
+class MyAccountAction implements MyAccountActionInterface
 {
     private $user;
     private $posts;
@@ -24,7 +26,7 @@ class MyAccountAction
         $this->twig = new Twig();
     }
 
-    public function __invoke($request)
+    public function __invoke(RequestInterface $request)
     {
         $this->session = $request->getSession();
         $posts = $this->posts->getPostsByUserId($this->session->get('id'));

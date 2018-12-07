@@ -3,11 +3,12 @@
 namespace App\UI\Action;
 
 use App\Domain\Repository\PostRepository;
+use App\UI\Action\Interfaces\ListPostsActionInterface;
 use Core\Interfaces\RequestInterface;
 use Core\Response;
 use Core\Twig;
 
-class ListPostsAction
+class ListPostsAction implements ListPostsActionInterface
 {
 
     private $postRepository;

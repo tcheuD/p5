@@ -3,11 +3,12 @@
 namespace App\UI\Action;
 
 use App\Domain\Repository\PostRepository;
+use App\UI\Action\Interfaces\HomeActionInterface;
 use Core\Interfaces\RequestInterface;
 use Core\Response;
 use Core\Twig;
 
-class HomeAction
+class HomeAction implements HomeActionInterface
 {
 
     private $postRepository;

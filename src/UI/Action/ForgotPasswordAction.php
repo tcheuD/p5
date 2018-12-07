@@ -4,6 +4,7 @@ namespace App\UI\Action;
 
 use App\Domain\Factory\UserFactory;
 use App\Domain\Repository\AccountRepository;
+use App\UI\Action\Interfaces\ForgotPasswordActionInterface;
 use Core\IpChecker;
 use Core\Interfaces\RequestInterface;
 use Core\Mailer;
@@ -11,7 +12,7 @@ use Core\MailFactory;
 use Core\Response;
 use Core\Twig;
 
-class ForgotPassword
+class ForgotPasswordAction implements ForgotPasswordActionInterface
 {
     private $accountRepository;
     private $userFactory;

@@ -4,13 +4,14 @@ namespace App\UI\Action;
 
 use App\Domain\Factory\UserFactory;
 use App\Domain\Repository\AccountRepository;
+use App\UI\Action\Interfaces\ResetPasswordActionInterface;
 use Core\Interfaces\RequestInterface;
 use Core\Mailer;
 use Core\MailFactory;
 use Core\Response;
 use Core\Twig;
 
-class ResetPassword
+class ResetPasswordAction implements ResetPasswordActionInterface
 {
     private $accountRepository;
     private $userFactory;

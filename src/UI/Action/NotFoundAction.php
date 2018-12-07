@@ -1,10 +1,12 @@
 <?php
 
 namespace App\UI\Action;
+use App\UI\Action\Interfaces\NotFoundActionInterface;
+use Core\Interfaces\RequestInterface;
 use Core\Response;
 use Core\Twig;
 
-class NotFoundAction
+class NotFoundAction implements NotFoundActionInterface
 {
     private $twig;
 
@@ -13,7 +15,7 @@ class NotFoundAction
         $this->twig = new Twig();
     }
 
-    public function __invoke($request)
+    public function __invoke(RequestInterface $request)
     {
         return new Response($this->twig->getTwig($request)->render('notFound.html.twig'));
     }

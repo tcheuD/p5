@@ -3,11 +3,12 @@
 namespace App\UI\Action;
 
 use App\Domain\Repository\CommentRepository;
+use App\UI\Action\Interfaces\MyCommentsActionInterface;
 use Core\Interfaces\RequestInterface;
 use Core\Response;
 use Core\Twig;
 
-class MyComments
+class MyCommentsAction implements MyCommentsActionInterface
 {
 
     private $commentRepository;
