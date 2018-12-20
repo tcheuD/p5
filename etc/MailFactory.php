@@ -31,7 +31,7 @@ class MailFactory
     {
         $mail = new Mail();
         $mail->setFrom($email);
-        $mail->setTo('contact@damienchedan.fr');
+        $mail->setTo('tcheutcheud@gmail.com');
         $mail->setSubject('contact' . $name);
         $mail->setMessage($message);
 
